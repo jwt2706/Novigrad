@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/signin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="Service Novigrad"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/usernameInput"
+        android:layout_below="@id/signin"
+        android:layout_margin="10dp"
+        android:background="#30ffffff"
+        android:hint="Username"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:padding="20dp"
+        android:drawableLeft="@drawable/baseline_person_outline_24"
+        android:drawablePadding="20dp"/>
+
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usernameInput"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#30ffffff"
+        android:drawableLeft="@drawable/baseline_key_24"
+        android:drawablePadding="20dp"
+        android:hint="Password"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:inputType="textPassword"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginbtn"
+        android:layout_below="@id/passwordInput"
+        android:text="LOGIN"
+        android:backgroundTint="@color/design_default_color_background"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgotpass"
+        android:layout_below="@id/loginbtn"
+        android:text="Forgot password?"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"/>
+</RelativeLayout>
+
+
