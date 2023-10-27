@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">novigradg15</string>
+    <string-array name="driver_license_options">
+        <item>&#x25BC; License Level</item>
+        <item>G1</item>
+        <item>G2</item>
+        <item>G</item>
+    </string-array>
+    <string-array name="role_options">
+        <item>&#x25BC; User Type</item>
+        <item>Customer</item>
+        <item>Employee</item>
+    </string-array>
 </resources>
