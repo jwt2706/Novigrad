@@ -16,8 +16,8 @@ class MainActivity : ComponentActivity() {
         val auth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
 
-        val email: String = findViewById<EditText>(R.id.usernameInput).getText().toString();
-        val password: String = findViewById<EditText>(R.id.passwordInput).getText().toString();
+
+
 
         val loginBtn = findViewById<MaterialButton>(R.id.loginbtn );
         val signupBtn = findViewById<MaterialButton>(R.id.signupbtn);
@@ -25,7 +25,9 @@ class MainActivity : ComponentActivity() {
         var userRole = "none";
 
         loginBtn.setOnClickListener {
-            if (email == "admin" && password == "admin") {
+            val email: String = findViewById<EditText>(R.id.usernameInput).getText().toString()
+            val password:String = findViewById<EditText>(R.id.passwordInput).getText().toString()
+            /*if (email == "admin" && password == "admin") {
                 Toast.makeText(this, "Admin Login Successful", Toast.LENGTH_SHORT).show()
                 userRole = "admin";
 
@@ -46,16 +48,18 @@ class MainActivity : ComponentActivity() {
                 loginIntent.putExtra("userRole", userRole)
                 loginIntent.putExtra("userName", email)
                 startActivity(loginIntent)
-            }
-
-            auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task ->
-                if(task.isSuccessful) {
-                    Toast.makeText(this, "Account creation successful.", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this,MainActivity::class.java))
-                    finish()
+            }*/
+            if (email == "" || password == "") {
+                Toast.makeText(this, "Missing credentials!", Toast.LENGTH_SHORT).show()
+            } else {
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
+                    if (it.isSuccessful) {
+                        Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this,WelcomeActivity::class.java))
+                        finish()
+                    } else
+                        Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
                 }
-            }.addOnFailureListener { e ->
-                Toast.makeText(applicationContext,e.localizedMessage,Toast.LENGTH_LONG).show()
             }
         }
 
