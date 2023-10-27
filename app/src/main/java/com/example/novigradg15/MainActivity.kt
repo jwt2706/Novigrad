@@ -1,46 +1,55 @@
 package com.example.novigradg15
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.novigradg15.ui.theme.Novigradg15Theme
+import com.google.android.material.button.MaterialButton
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Novigradg15Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+        setContentView(R.layout.activity_main)
+
+        val username = findViewById<EditText>(R.id.usernameInput);
+        val password = findViewById<EditText>(R.id.passwordInput);
+
+        val loginBtn = findViewById<MaterialButton>(R.id.loginbtn );
+        val signupBtn = findViewById<MaterialButton>(R.id.signupbtn);
+
+        var userRole = "none";
+
+        loginBtn.setOnClickListener {
+            if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
+                Toast.makeText(this, "Admin Login Successful", Toast.LENGTH_SHORT).show()
+                userRole = "admin";
+
+            } else if (username.getText().toString().equals("customer") && password.getText().toString().equals("customer")) {
+                Toast.makeText(this, "Customer Login Successful", Toast.LENGTH_SHORT).show()
+                userRole = "customer";
+
+            } else if (username.getText().toString().equals("employee") && password.getText().toString().equals("employee")) {
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                userRole = "employee";
+
+            } else {
+                Toast.makeText(this, "Incorrect username/password", Toast.LENGTH_SHORT).show()
+            }
+
+            if (userRole != "none") {
+                val loginIntent = Intent(this, WelcomeActivity::class.java)
+                loginIntent.putExtra("userRole", userRole)
+                loginIntent.putExtra("userName", username.getText().toString())
+                startActivity(loginIntent)
             }
         }
+
+        signupBtn.setOnClickListener {
+            val signupIntent = Intent(this, SignupActivity::class.java)
+            startActivity(signupIntent)
+        }
+
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Novigradg15Theme {
-        Greeting("Android")
-    }
-}
