@@ -30,9 +30,37 @@ class SignupActivity : AppCompatActivity() {
 
             auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
                 if(task.isSuccessful) {
-                    Toast.makeText(this, "Account creation successful.", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this,MainActivity::class.java))
-                    finish()
+
+                    val userId = auth.currentUser?.uid
+                    val db = FirebaseFirestore.getInstance()
+                    val collection = db.collection("users")
+
+                    val user = hashMapOf(
+                        "userName" to userName,
+                        "email" to email,
+                        "role" to role,
+                        "licenseLevel" to licenseLevel,
+                    )
+                    collection.document(userId!!)
+                        .set(user)
+                        .addOnCompleteListener {saveData ->
+                            if (saveData.isSuccessful) {
+
+                                Toast.makeText(this, "Account creation successful.", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this,MainActivity::class.java))
+                                finish()
+
+                            } else {
+                                Toast.makeText(this, "EPIC FAIL LMAO", Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
+
+
+
+
+
+
                 }
             }.addOnFailureListener { e ->
                 Toast.makeText(applicationContext,e.localizedMessage,Toast.LENGTH_LONG).show()
