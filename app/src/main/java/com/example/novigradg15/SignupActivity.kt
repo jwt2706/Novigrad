@@ -32,8 +32,7 @@ class SignupActivity : AppCompatActivity() {
                 if(task.isSuccessful) {
 
                     val userId = auth.currentUser?.uid
-                    val db = FirebaseFirestore.getInstance()
-                    val collection = db.collection("users")
+                    val db = FirebaseFirestore.getInstance().collection("users")
 
                     val user = hashMapOf(
                         "userName" to userName,
@@ -41,7 +40,7 @@ class SignupActivity : AppCompatActivity() {
                         "role" to role,
                         "licenseLevel" to licenseLevel,
                     )
-                    collection.document(userId!!)
+                    db.document(userId!!)
                         .set(user)
                         .addOnCompleteListener {saveData ->
                             if (saveData.isSuccessful) {
