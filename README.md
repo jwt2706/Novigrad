@@ -2,4 +2,5 @@
 service-novigrad-group-15 created by GitHub Classroom
 
 Compte Admin:
-
+email: admin@novigrad.gov
+mot de passe: admin123
