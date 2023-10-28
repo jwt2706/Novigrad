@@ -7,48 +7,19 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val auth = FirebaseAuth.getInstance()
-        val db = FirebaseFirestore.getInstance()
-
-
-
-
-        val loginBtn = findViewById<MaterialButton>(R.id.loginbtn );
-        val signupBtn = findViewById<MaterialButton>(R.id.signupbtn);
-
-        var userRole = "none";
+        val loginBtn = findViewById<MaterialButton>(R.id.loginbtn )
+        val signupBtn = findViewById<MaterialButton>(R.id.signupbtn)
 
         loginBtn.setOnClickListener {
             val email: String = findViewById<EditText>(R.id.usernameInput).getText().toString()
             val password:String = findViewById<EditText>(R.id.passwordInput).getText().toString()
-            /*if (email == "admin" && password == "admin") {
-                Toast.makeText(this, "Admin Login Successful", Toast.LENGTH_SHORT).show()
-                userRole = "admin";
 
-            } else if (email == "customer" && password == "customer") {
-                Toast.makeText(this, "Customer Login Successful", Toast.LENGTH_SHORT).show()
-                userRole = "customer";
-
-            } else if (email == "employee" && password == "employee") {
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                userRole = "employee";
-
-            } else {
-                Toast.makeText(this, "Incorrect username/password", Toast.LENGTH_SHORT).show()
-            }
-
-            if (userRole != "none") {
-                val loginIntent = Intent(this, WelcomeActivity::class.java)
-                loginIntent.putExtra("userRole", userRole)
-                loginIntent.putExtra("userName", email)
-                startActivity(loginIntent)
-            }*/
             if (email == "" || password == "") {
                 Toast.makeText(this, "Missing credentials!", Toast.LENGTH_SHORT).show()
             } else {
