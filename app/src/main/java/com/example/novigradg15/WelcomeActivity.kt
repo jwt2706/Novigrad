@@ -3,19 +3,15 @@ package com.example.novigradg15
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-<<<<<<< HEAD
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-=======
 
->>>>>>> main
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-<<<<<<< HEAD
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser!!.uid
         val db = FirebaseFirestore.getInstance().collection("users").document(userId)
@@ -39,16 +35,5 @@ class WelcomeActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
-=======
-        val userRole = intent.getStringExtra("userRole")
-        val userName = intent.getStringExtra("userName")
-
-        val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
-        welcomeMessage.text  = "Welcome $userName!"
-
-        val roleMessage = findViewById<TextView>(R.id.roleMessage)
-        roleMessage.text  = "Role: $userRole"
->>>>>>> main
-
     }
 }
