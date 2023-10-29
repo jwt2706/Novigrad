@@ -5,6 +5,7 @@ Groupe 15:
 - Jacob Taylor (300273062)
 - Ahmed Nasr (300279868)
 - Daniel Morghati (300320190)
+- Ibrahim Darwish (300276702)
 
 Compte Admin:
 - email: admin@novigrad.gov
