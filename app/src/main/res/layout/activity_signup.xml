@@ -129,7 +129,7 @@
         </LinearLayout>
 
     <ImageView
-        android:id="@+id/profileImageView"
+        android:id="@+id/imagePreview"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_below="@id/spinnerLayout"
@@ -142,7 +142,7 @@
         android:id="@+id/uploadImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profileImageView"
+        android:layout_below="@id/imagePreview"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"

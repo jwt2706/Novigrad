@@ -1,7 +1,10 @@
 package com.example.novigradg15
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -35,5 +38,9 @@ class WelcomeActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
+
+
     }
+
+
 }
