@@ -7,5 +7,5 @@ Groupe 15:
 - Daniel Morghati (300320190)
 
 Compte Admin:
-email: admin@novigrad.gov
-mot de passe: admin123
+- email: admin@novigrad.gov
+- mot de passe: admin123
