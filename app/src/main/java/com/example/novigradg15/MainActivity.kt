@@ -9,39 +9,52 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
+    private lateinit var auth: FirebaseAuth
+    private lateinit var loginBtn: MaterialButton
+    private lateinit var signupBtn: MaterialButton
+    private lateinit var email: String
+    private lateinit var password: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val auth = FirebaseAuth.getInstance()
-        val loginBtn = findViewById<MaterialButton>(R.id.loginbtn )
-        val signupBtn = findViewById<MaterialButton>(R.id.signupbtn)
+        loginBtn = findViewById(R.id.loginbtn)
+        signupBtn = findViewById(R.id.signupbtn)
+
+        auth = FirebaseAuth.getInstance()
 	
-	//attempts login by verifying the submitted credentials on firebase
+	    //attempts login by verifying the submitted credentials on firebase
         loginBtn.setOnClickListener {
-            val email: String = findViewById<EditText>(R.id.usernameInput).getText().toString()
-            val password:String = findViewById<EditText>(R.id.passwordInput).getText().toString()
-		
-	    //checks for empty fields
-            if (email == "" || password == "") {
-                Toast.makeText(this, "Missing credentials!", Toast.LENGTH_SHORT).show()
-            } else {
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
-                    if (it.isSuccessful) {
-                        Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this,WelcomeActivity::class.java))
-                        finish()
-                    } else
-                        Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
-                }
-            }
+            loginBtnListener()
         }
 
         signupBtn.setOnClickListener {
-            val signupIntent = Intent(this, SignupActivity::class.java)
-            startActivity(signupIntent)
+            signupBtnListener()
         }
 
+    }
+
+    private fun loginBtnListener() {
+        email = findViewById<EditText>(R.id.usernameInput).getText().toString()
+        password = findViewById<EditText>(R.id.passwordInput).getText().toString()
+        //checks for empty fields
+        if (email == "" || password == "") {
+            Toast.makeText(this, "Missing credentials!", Toast.LENGTH_SHORT).show()
+        } else {
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this,WelcomeActivity::class.java))
+                    finish()
+                } else
+                    Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun signupBtnListener() {
+        val signupIntent = Intent(this, SignupActivity::class.java)
+        startActivity(signupIntent)
     }
 }
 
