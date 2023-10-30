@@ -18,9 +18,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        email = findViewById<EditText>(R.id.usernameInput).getText().toString()
-        password = findViewById<EditText>(R.id.passwordInput).getText().toString()
-
         loginBtn = findViewById(R.id.loginbtn)
         signupBtn = findViewById(R.id.signupbtn)
 
@@ -38,6 +35,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun loginBtnListener() {
+        email = findViewById<EditText>(R.id.usernameInput).getText().toString()
+        password = findViewById<EditText>(R.id.passwordInput).getText().toString()
         //checks for empty fields
         if (email == "" || password == "") {
             Toast.makeText(this, "Missing credentials!", Toast.LENGTH_SHORT).show()
