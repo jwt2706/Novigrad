@@ -6,7 +6,7 @@ Groupe 15:
 - Ahmed Nasr (300279868)
 - Daniel Morghati (300320190)
 - Ibrahim Darwish (300276702)
-
+- Itokiana Solofomalala(300320019)
 Compte Admin:
 - email: admin@novigrad.gov
 - mot de passe: admin123
