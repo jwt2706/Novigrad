@@ -16,11 +16,13 @@ class MainActivity : ComponentActivity() {
         val auth = FirebaseAuth.getInstance()
         val loginBtn = findViewById<MaterialButton>(R.id.loginbtn )
         val signupBtn = findViewById<MaterialButton>(R.id.signupbtn)
-
+	
+	//attempts login by verifying the submitted credentials on firebase
         loginBtn.setOnClickListener {
             val email: String = findViewById<EditText>(R.id.usernameInput).getText().toString()
             val password:String = findViewById<EditText>(R.id.passwordInput).getText().toString()
-
+		
+	    //checks for empty fields
             if (email == "" || password == "") {
                 Toast.makeText(this, "Missing credentials!", Toast.LENGTH_SHORT).show()
             } else {

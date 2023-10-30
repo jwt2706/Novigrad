@@ -63,7 +63,8 @@ class SignupActivity : AppCompatActivity() {
                 Intent(MediaStore.ACTION_PICK_IMAGES)
             )
         }
-
+	
+	//attempts to create an account on the database with the submitted credentials
         signupBtn.setOnClickListener {
             val userName: String = findViewById<EditText>(R.id.usernameInput).getText().toString()
             val email: String = findViewById<EditText>(R.id.emailInput).getText().toString()
@@ -93,7 +94,7 @@ class SignupActivity : AppCompatActivity() {
                                 finish()
 
                             } else {
-                                Toast.makeText(this, "EPIC FAIL LMAO", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Account creation failed. Please try again.", Toast.LENGTH_LONG).show()
 
                             }
                         }

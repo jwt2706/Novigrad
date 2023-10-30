@@ -19,7 +19,7 @@ class WelcomeActivity : AppCompatActivity() {
         val userId = auth.currentUser!!.uid
         val db = FirebaseFirestore.getInstance().collection("users").document(userId)
 
-        //get user data from db
+        //get user data from database
         db.get()
             .addOnSuccessListener {documentSnapshot ->
                 if (documentSnapshot.exists()) {
