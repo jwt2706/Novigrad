@@ -8,18 +8,31 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class WelcomeActivity : AppCompatActivity() {
+
+    private lateinit var userId: String
+    private lateinit var db: DocumentReference
+    private lateinit var auth: FirebaseAuth
+    private lateinit var welcomeMessage: TextView
+    private lateinit var roleMessage: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-        val auth = FirebaseAuth.getInstance()
-        val userId = auth.currentUser!!.uid
-        val db = FirebaseFirestore.getInstance().collection("users").document(userId)
+        auth = FirebaseAuth.getInstance()
+        userId = auth.currentUser!!.uid
+        db = FirebaseFirestore.getInstance().collection("users").document(userId)
 
         //get user data from database
+        fetchAndWriteUserData()
+
+    }
+
+    private fun fetchAndWriteUserData() {
         db.get()
             .addOnSuccessListener {documentSnapshot ->
                 if (documentSnapshot.exists()) {
@@ -27,9 +40,9 @@ class WelcomeActivity : AppCompatActivity() {
                     val role = data?.get("role") as? String
                     val userName = data?.get("userName") as? String
                     //display data in welcome message
-                    val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
+                    welcomeMessage = findViewById(R.id.welcomeMessage)
                     welcomeMessage.text  = "Welcome $userName!"
-                    val roleMessage = findViewById<TextView>(R.id.roleMessage)
+                    roleMessage = findViewById(R.id.roleMessage)
                     roleMessage.text  = "Role: $role"
                 } else {
                     Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show()
@@ -38,8 +51,6 @@ class WelcomeActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
-
-
     }
 
 
