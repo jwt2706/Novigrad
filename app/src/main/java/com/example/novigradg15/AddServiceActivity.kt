@@ -55,6 +55,7 @@ class AddServiceActivity : AppCompatActivity() {
             "status" to statusCheckBox.isChecked,
             "photo" to photoCheckBox.isChecked,
         )
+        class Service(name: String, additionalInfo: String, requiredDocuments: Map<String, Boolean>)
         val service = Service(serviceName.text.toString(), additionalInfo.text.toString(), requiredDocumentsMap)
          */
         val service = hashMapOf(
@@ -83,5 +84,3 @@ class AddServiceActivity : AppCompatActivity() {
 
     }
 }
-
-class Service(name: String, additionalInfo: String, requiredDocuments: Map<String, Boolean>)
