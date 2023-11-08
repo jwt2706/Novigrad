@@ -14,8 +14,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.146" />
 
     <TextView
         android:id="@+id/roleMessage"
@@ -28,5 +30,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeMessage" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/serviceSettingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/roleMessage"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/design_default_color_background"
+        android:text="Service options"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roleMessage"
+        app:layout_constraintVertical_bias="0.192" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/branchSettingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/branchSettingsBtn"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/design_default_color_background"
+        android:text="Branch options"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/serviceSettingsBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
