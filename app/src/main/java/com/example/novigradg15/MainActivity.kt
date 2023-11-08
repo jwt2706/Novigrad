@@ -7,9 +7,13 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var userId: String
+    private lateinit var db: DocumentReference
     private lateinit var loginBtn: MaterialButton
     private lateinit var signupBtn: MaterialButton
     private lateinit var email: String
@@ -22,6 +26,8 @@ class MainActivity : ComponentActivity() {
         signupBtn = findViewById(R.id.signupbtn)
 
         auth = FirebaseAuth.getInstance()
+        userId = auth.currentUser!!.uid
+        db = FirebaseFirestore.getInstance().collection("users").document(userId)
 	
 	    //attempts login by verifying the submitted credentials on firebase
         loginBtn.setOnClickListener {
@@ -44,8 +50,25 @@ class MainActivity : ComponentActivity() {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
                 if (it.isSuccessful) {
                     Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this,WelcomeActivity::class.java))
-                    finish()
+                        db.get()
+                            .addOnSuccessListener { documentSnapshot ->
+                                if (documentSnapshot.exists()) {
+                                    val data = documentSnapshot.data
+                                    val role = data?.get("role") as? String
+                                    if (role == "Admin") {
+                                        startActivity(Intent(this,AdminWelcomeActivity::class.java))
+                                        finish()
+                                    } else {
+                                        startActivity(Intent(this,WelcomeActivity::class.java))
+                                        finish()
+                                    }
+                                } else {
+                                    Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
+                            }
                 } else
                     Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
             }
