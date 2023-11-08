@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -23,7 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ServiceSettingsActivity : AppCompatActivity() {
 
     private lateinit var userId: String
-    private lateinit var db: DocumentReference
+    private lateinit var userData: DocumentReference
+    private lateinit var db: CollectionReference
     private lateinit var auth: FirebaseAuth
     private lateinit var serviceListView: ListView
     private lateinit var addServiceBtn: MaterialButton
@@ -33,15 +35,26 @@ class ServiceSettingsActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         userId = auth.currentUser!!.uid
-        db = FirebaseFirestore.getInstance().collection("users").document(userId)
+        userData = FirebaseFirestore.getInstance().collection("users").document(userId)
+        db = FirebaseFirestore.getInstance().collection("services")
         addServiceBtn = findViewById(R.id.addServiceBtn)
 
         addServiceBtn.setOnClickListener {
-            //if "ADD SERVICE" clicked, open the add service activity page
             addServiceBtnListener()
         }
 
         serviceListView = findViewById(R.id.serviceList)
+
+        db.get() //get all services from the database
+            .addOnSuccessListener { docs ->
+                for (doc in docs) {
+                    //DO WHAT YOU WANT HERE WITH EACH 'DOC'. Haven't tested this, but it should work...
+                }
+            }
+            .addOnFailureListener{ e ->
+                Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
+
+            }
 
         val data = arrayOf(
             ListItem("Driver's License", "24/10/23"),
@@ -60,7 +73,7 @@ class ServiceSettingsActivity : AppCompatActivity() {
         finish()
     }
     private fun fetchAndWriteUserData() {
-        db.get()
+        userData.get()
             .addOnSuccessListener {documentSnapshot ->
                 if (documentSnapshot.exists()) {
                     val data = documentSnapshot.data
@@ -115,6 +128,7 @@ class CustomListAdapter(context: Context, data: Array<ListItem>) :
 
         btnDelete.setOnClickListener {
             // Handle the "Delete" button click for this item
+
         }
 
         return view
