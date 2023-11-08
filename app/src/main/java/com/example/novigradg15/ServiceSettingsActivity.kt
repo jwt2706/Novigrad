@@ -37,6 +37,7 @@ class ServiceSettingsActivity : AppCompatActivity() {
         addServiceBtn = findViewById(R.id.addServiceBtn)
 
         addServiceBtn.setOnClickListener {
+            //if "ADD SERVICE" clicked, open the add service activity page
             addServiceBtnListener()
         }
 
