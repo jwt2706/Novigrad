@@ -1,8 +1,6 @@
 package com.example.novigradg15
 
 //import android.R
-import android.R.attr.data
-import android.R.attr.listSeparatorTextViewStyle
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -45,28 +43,28 @@ class ServiceSettingsActivity : AppCompatActivity() {
 
         serviceListView = findViewById(R.id.serviceList)
 
-        val data = ArrayList<ListItem>();
+        var data = ArrayList<ListItem>();
         db.get() //get all services from the database
             .addOnSuccessListener { docs ->
                 for (doc in docs) {
                     val item = ListItem(
-                        "Name",
-                        true,
-                        true,
-                        true,
-                        true,
-                        "Additional Information"
+                        doc.reference.id,
+                        doc.getBoolean("documents")?: false,
+                        doc.getBoolean("form")?: false,
+                        doc.getBoolean("status")?: false,
+                        doc.getBoolean("photo")?: false,
+                        doc.getString("additionalInfo")?: ""
                     )
                     data.add(item)
                 }
+                Log.d("Tag2222", data.toString())
+                val adapter = CustomListAdapter(this, data)
+                serviceListView.adapter = adapter
             }
             .addOnFailureListener{ e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
 
             }
-
-        val adapter = CustomListAdapter(this, data)
-        serviceListView.adapter = adapter
 
     }
 
@@ -121,11 +119,28 @@ class CustomListAdapter(context: Context, data: ArrayList<ListItem>) :
 
 
         btnModify.setOnClickListener {
-            // Handle the "Modify" button click for this item
+            val intent = Intent(context, ModifyServiceActivity::class.java)
+            intent.putExtra("name", listItem.name)
+            intent.putExtra("documentsValue", listItem.documentsUsed)
+            intent.putExtra("formValue", listItem.formUsed)
+            intent.putExtra("statusValue", listItem.statusUsed)
+            intent.putExtra("photoValue", listItem.photoUsed)
+            intent.putExtra("additionalInfoValue", listItem.additionalInformation)
+            context.startActivity(intent)
         }
 
         btnDelete.setOnClickListener {
-            // Handle the "Delete" button click for this item
+            val db = FirebaseFirestore.getInstance()
+            val collectionReference = db.collection("services")
+            val documentReference = collectionReference.document(listItem.name)
+            documentReference.delete()
+                .addOnSuccessListener {
+                    data.remove(listItem) // Remove the item from the data list
+                    notifyDataSetChanged()
+                }
+//                .addOnFailureListener { e ->
+//
+//                }
         }
 
         return view
@@ -134,9 +149,9 @@ class CustomListAdapter(context: Context, data: ArrayList<ListItem>) :
 
 class ListItem(
     val name: String,
-    val documentsUsed: Boolean,
-    val formUsed: Boolean,
-    val statusUsed: Boolean,
-    val photoUsed: Boolean,
-    val additionalInformation: String
+    val documentsUsed: Boolean?,
+    val formUsed: Boolean?,
+    val statusUsed: Boolean?,
+    val photoUsed: Boolean?,
+    val additionalInformation: String?
     )

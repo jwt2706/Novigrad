@@ -19,10 +19,18 @@ class ModifyServiceActivity : AppCompatActivity() {
     private lateinit var formCheckBox: CheckBox
     private lateinit var statusCheckBox: CheckBox
     private lateinit var photoCheckBox: CheckBox
-    private lateinit var addServiceBtn: MaterialButton
+    private lateinit var modifyServiceBtn: MaterialButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modify_service)
+
+        val intent = intent
+        val name = intent.getStringExtra("name")?: "Service Name"
+        val documentsValue = intent.getBooleanExtra("documentsValue", false)
+        val formValue = intent.getBooleanExtra("formValue", false)
+        val statusValue = intent.getBooleanExtra("statusValue", false)
+        val photoValue = intent.getBooleanExtra("photoValue", false)
+        val additionalInfoValue = intent.getStringExtra("additionalInfoValue")?: "Enter additional information"
 
         serviceName = findViewById(R.id.serviceNameInput)
         additionalInfo = findViewById(R.id.additionalInfoInput)
@@ -30,34 +38,32 @@ class ModifyServiceActivity : AppCompatActivity() {
         formCheckBox = findViewById(R.id.checkBoxForm)
         statusCheckBox = findViewById(R.id.checkBoxStatus)
         photoCheckBox = findViewById(R.id.checkBoxPhoto)
-        addServiceBtn = findViewById(R.id.addServiceBtn)
+        modifyServiceBtn = findViewById(R.id.modifyServiceBtn)
 
-        addServiceBtn.setOnClickListener {
+        serviceName.setText(name)
+        documentsCheckBox.isChecked =documentsValue
+        formCheckBox.isChecked =formValue
+        statusCheckBox.isChecked =statusValue
+        photoCheckBox.isChecked =photoValue
+        additionalInfo.setText(additionalInfoValue)
+
+        modifyServiceBtn.setOnClickListener {
             if (serviceName.text.toString()!="") {
-                addServiceBtnListener()
+                modifyServiceBtnListener()
             } else {
                 Toast.makeText(this, "Service must have a name!", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun addServiceBtnListener() {
+    //Works by deleted the present service and replacing it with the modified one
+    private fun modifyServiceBtnListener() {
+
 
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance().collection("services")
 
-        /*
-        val requiredDocumentsMap = mapOf(
-            "userIDofCreator" to userId,
-            "documents" to documentsCheckBox.isChecked,
-            "form" to formCheckBox.isChecked,
-            "status" to statusCheckBox.isChecked,
-            "photo" to photoCheckBox.isChecked,
-        )
-        class Service(name: String, additionalInfo: String, requiredDocuments: Map<String, Boolean>)
-        val service = Service(serviceName.text.toString(), additionalInfo.text.toString(), requiredDocumentsMap)
-         */
         val service = hashMapOf(
             "userIDofCreator" to userId,
             "additionalInfo" to additionalInfo.text.toString(),
@@ -66,6 +72,16 @@ class ModifyServiceActivity : AppCompatActivity() {
             "status" to statusCheckBox.isChecked,
             "photo" to photoCheckBox.isChecked,
         )
+
+        val documentReference = db.document(intent.getStringExtra("name")?: "Service Name")
+        documentReference.delete()
+            .addOnSuccessListener {
+
+            }
+                .addOnFailureListener { e ->
+
+
+                }
 
         // ADD SERVICE OBJECT TO DATABASE HERE
         db.document(serviceName.text.toString())

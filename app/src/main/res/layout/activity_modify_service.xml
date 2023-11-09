@@ -134,7 +134,7 @@
             android:gravity="top"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/addServiceBtn"
+            android:id="@+id/modifyServiceBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Modify Service"

@@ -12,7 +12,8 @@
         android:supportsRtl="true">
         <activity
             android:name=".ModifyServiceActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents"/>
         <activity
             android:name=".AdminWelcomeActivity"
             android:exported="false"
