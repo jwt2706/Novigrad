@@ -57,7 +57,6 @@ class ServiceSettingsActivity : AppCompatActivity() {
                     )
                     data.add(item)
                 }
-                Log.d("Tag2222", data.toString())
                 val adapter = CustomListAdapter(this, data)
                 serviceListView.adapter = adapter
             }

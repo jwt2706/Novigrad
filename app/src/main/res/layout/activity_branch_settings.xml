@@ -20,7 +20,6 @@
             android:layout_marginTop="16dp"
             android:textSize="24sp" />
 
-
         <ListView
             android:id="@+id/serviceList"
             android:layout_width="match_parent"
