@@ -11,9 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".ModifyServiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminWelcomeActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents"/>
+            android:theme="@style/Theme.MaterialComponents" />
         <activity
             android:name=".AddServiceActivity"
             android:exported="false"

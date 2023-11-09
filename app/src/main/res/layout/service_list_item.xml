@@ -2,40 +2,140 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/itemText"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:layout_margin="5dp"
-            android:layout_height="30dp"
             android:text="Item Text" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnModify"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Modify"
-            android:backgroundTint="@color/design_default_color_background"/>
+            android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/documentsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Documents: " />
+
+            <TextView
+                android:id="@+id/documentsValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(True/False)" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Delete"
-            android:backgroundTint="@color/design_default_color_background"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/formLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Form: " />
+
+            <TextView
+                android:id="@+id/formValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(True/False)" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/statusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status: " />
+
+            <TextView
+                android:id="@+id/statusValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(True/False)" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/photoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photo: " />
+
+            <TextView
+                android:id="@+id/photoValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(True/False)" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/additionalInfoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Additional Information: " />
+
+            <TextView
+                android:id="@+id/additionalInfoValue"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Your additional information here"
+                android:gravity="start"
+                android:layout_margin="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnModify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Modify"
+                android:backgroundTint="@color/design_default_color_background" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Delete"
+                android:backgroundTint="@color/design_default_color_background" />
+        </LinearLayout>
+
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

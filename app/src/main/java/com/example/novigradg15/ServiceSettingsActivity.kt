@@ -2,9 +2,11 @@ package com.example.novigradg15
 
 //import android.R
 import android.R.attr.data
+import android.R.attr.listSeparatorTextViewStyle
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,8 +36,6 @@ class ServiceSettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_service_settings)
 
         auth = FirebaseAuth.getInstance()
-        userId = auth.currentUser!!.uid
-        userData = FirebaseFirestore.getInstance().collection("users").document(userId)
         db = FirebaseFirestore.getInstance().collection("services")
         addServiceBtn = findViewById(R.id.addServiceBtn)
 
@@ -45,10 +45,19 @@ class ServiceSettingsActivity : AppCompatActivity() {
 
         serviceListView = findViewById(R.id.serviceList)
 
+        val data = ArrayList<ListItem>();
         db.get() //get all services from the database
             .addOnSuccessListener { docs ->
                 for (doc in docs) {
-                    //DO WHAT YOU WANT HERE WITH EACH 'DOC'. Haven't tested this, but it should work...
+                    val item = ListItem(
+                        "Name",
+                        true,
+                        true,
+                        true,
+                        true,
+                        "Additional Information"
+                    )
+                    data.add(item)
                 }
             }
             .addOnFailureListener{ e ->
@@ -56,43 +65,21 @@ class ServiceSettingsActivity : AppCompatActivity() {
 
             }
 
-        val data = arrayOf(
-            ListItem("Driver's License", "24/10/23"),
-            ListItem("Passport", "9/2/17")
-        )
-
         val adapter = CustomListAdapter(this, data)
         serviceListView.adapter = adapter
 
-        //get user data from database
-        fetchAndWriteUserData()
     }
 
     private fun addServiceBtnListener() {
         startActivity(Intent(this,AddServiceActivity::class.java))
         finish()
     }
-    private fun fetchAndWriteUserData() {
-        userData.get()
-            .addOnSuccessListener {documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    val data = documentSnapshot.data
-                    val role = data?.get("role") as? String
-                    val userName = data?.get("userName") as? String
-                } else {
-                    Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
-            }
-    }
 }
 
-class CustomListAdapter(context: Context, data: Array<ListItem>) :
+class CustomListAdapter(context: Context, data: ArrayList<ListItem>) :
     BaseAdapter() {
     private val context: Context
-    private val data: Array<ListItem>
+    private val data: ArrayList<ListItem>
 
     init {
         this.context = context
@@ -117,10 +104,21 @@ class CustomListAdapter(context: Context, data: Array<ListItem>) :
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.service_list_item, parent, false)
 
         val itemText = view.findViewById<TextView>(R.id.itemText)
+        val documentsValue = view.findViewById<TextView>(R.id.documentsValue)
+        val formValue = view.findViewById<TextView>(R.id.formValue)
+        val statusValue = view.findViewById<TextView>(R.id.statusValue)
+        val photoValue = view.findViewById<TextView>(R.id.photoValue)
+        val additionalInfoValue = view.findViewById<TextView>(R.id.additionalInfoValue)
         val btnModify = view.findViewById<Button>(R.id.btnModify)
         val btnDelete = view.findViewById<Button>(R.id.btnDelete)
 
         itemText.text = listItem.name
+        documentsValue.text = listItem.documentsUsed.toString()
+        formValue.text = listItem.formUsed.toString()
+        statusValue.text = listItem.statusUsed.toString()
+        photoValue.text = listItem.photoUsed.toString()
+        additionalInfoValue.text = listItem.additionalInformation
+
 
         btnModify.setOnClickListener {
             // Handle the "Modify" button click for this item
@@ -128,11 +126,17 @@ class CustomListAdapter(context: Context, data: Array<ListItem>) :
 
         btnDelete.setOnClickListener {
             // Handle the "Delete" button click for this item
-
         }
 
         return view
     }
 }
 
-class ListItem(val name: String, val date: String)
+class ListItem(
+    val name: String,
+    val documentsUsed: Boolean,
+    val formUsed: Boolean,
+    val statusUsed: Boolean,
+    val photoUsed: Boolean,
+    val additionalInformation: String
+    )

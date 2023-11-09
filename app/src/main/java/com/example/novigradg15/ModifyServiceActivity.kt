@@ -12,7 +12,7 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class AddServiceActivity : AppCompatActivity() {
+class ModifyServiceActivity : AppCompatActivity() {
     private lateinit var serviceName: EditText
     private lateinit var additionalInfo: EditText
     private lateinit var documentsCheckBox: CheckBox
@@ -22,7 +22,7 @@ class AddServiceActivity : AppCompatActivity() {
     private lateinit var addServiceBtn: MaterialButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_service)
+        setContentView(R.layout.activity_modify_service)
 
         serviceName = findViewById(R.id.serviceNameInput)
         additionalInfo = findViewById(R.id.additionalInfoInput)
@@ -47,6 +47,17 @@ class AddServiceActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance().collection("services")
 
+        /*
+        val requiredDocumentsMap = mapOf(
+            "userIDofCreator" to userId,
+            "documents" to documentsCheckBox.isChecked,
+            "form" to formCheckBox.isChecked,
+            "status" to statusCheckBox.isChecked,
+            "photo" to photoCheckBox.isChecked,
+        )
+        class Service(name: String, additionalInfo: String, requiredDocuments: Map<String, Boolean>)
+        val service = Service(serviceName.text.toString(), additionalInfo.text.toString(), requiredDocumentsMap)
+         */
         val service = hashMapOf(
             "userIDofCreator" to userId,
             "additionalInfo" to additionalInfo.text.toString(),
