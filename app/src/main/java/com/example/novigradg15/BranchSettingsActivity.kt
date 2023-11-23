@@ -24,19 +24,16 @@ import com.google.firebase.auth.FirebaseUser
 
 class BranchSettingsActivity : AppCompatActivity() {
 
-    private lateinit var userId: String
-    private lateinit var userData: DocumentReference
     private lateinit var db: CollectionReference
     private lateinit var auth: FirebaseAuth
-    private lateinit var serviceListView: ListView
-    private lateinit var addServiceBtn: MaterialButton
+    private lateinit var branchListView: ListView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_branch_settings)
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection("users")
-        serviceListView = findViewById(R.id.serviceList)
+        branchListView = findViewById(R.id.serviceList)
 
         var data = ArrayList<BranchListItem>();
         db.get() //get all services from the database
@@ -53,7 +50,7 @@ class BranchSettingsActivity : AppCompatActivity() {
                     }
                 }
                 val adapter = BranchCustomListAdapter(this, data)
-                serviceListView.adapter = adapter
+                branchListView.adapter = adapter
             }
             .addOnFailureListener{ e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
