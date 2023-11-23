@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context=".AddServiceActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="30dp"
+        android:gravity="top">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modify Service"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/serviceNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="#30ffffff"
+            android:hint="Service Name"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:inputType="text"
+            android:maxLines="1"/>
+
+        <TextView
+            android:id="@+id/documentsHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Required information"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            />
+        <View
+            android:layout_below="@id/documentsHeading"
+            android:layout_width="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            android:layout_gravity="center"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxDocuments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Documents"
+            android:textSize="15dp"
+            android:theme="@style/Platform.MaterialComponents"
+            android:buttonTint="@color/white"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxForm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Form"
+            android:textSize="15dp"
+            android:theme="@style/Platform.MaterialComponents"
+            android:buttonTint="@color/white"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Proof of Status"
+            android:textSize="15dp"
+            android:theme="@style/Platform.MaterialComponents"
+            android:buttonTint="@color/white"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Customer Photo"
+            android:textSize="15dp"
+            android:theme="@style/Platform.MaterialComponents"
+            android:buttonTint="@color/white"/>
+
+        <TextView
+            android:id="@+id/additionalInfoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service Description"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+
+        <View
+            android:layout_below="@id/documentsHeading"
+            android:layout_width="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/additionalInfoInput"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="#30ffffff"
+            android:hint="Enter additional information"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:inputType="textMultiLine"
+            android:gravity="top"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/modifyServiceBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modify Service"
+            android:backgroundTint="@color/design_default_color_background"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
