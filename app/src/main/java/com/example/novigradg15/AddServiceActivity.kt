@@ -47,6 +47,15 @@ class AddServiceActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance().collection("services")
 
+        if (userId != null) {
+            createService(userId)
+        }
+    }
+
+    fun createService(userId: String):Boolean {
+        var success = false
+        val db = FirebaseFirestore.getInstance().collection("services")
+
         val service = hashMapOf(
             "userIDofCreator" to userId,
             "additionalInfo" to additionalInfo.text.toString(),
@@ -56,11 +65,11 @@ class AddServiceActivity : AppCompatActivity() {
             "photo" to photoCheckBox.isChecked,
         )
 
-        // ADD SERVICE OBJECT TO DATABASE HERE
         db.document(serviceName.text.toString())
             .set(service)
             .addOnCompleteListener {saveData ->
                 if (saveData.isSuccessful) {
+                    success = true
                     Toast.makeText(this, "Service creation successful.", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this,ServiceSettingsActivity::class.java))
                     finish()
@@ -70,5 +79,7 @@ class AddServiceActivity : AppCompatActivity() {
             }.addOnFailureListener { e ->
                 Toast.makeText(applicationContext,e.localizedMessage,Toast.LENGTH_LONG).show()
             }
+        return success
     }
+
 }

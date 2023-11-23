@@ -34,10 +34,12 @@ class WelcomeActivity : AppCompatActivity() {
 
     }
 
-    private fun fetchAndWriteUserData() {
+    fun fetchAndWriteUserData():Boolean {
+        var success = false
         db.get()
             .addOnSuccessListener {documentSnapshot ->
                 if (documentSnapshot.exists()) {
+                    success = true
                     val data = documentSnapshot.data
                     val role = data?.get("role") as? String
                     val userName = data?.get("userName") as? String
@@ -53,9 +55,10 @@ class WelcomeActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
+        return success
     }
 
-    public fun isAdmin(role: String):Boolean {
+    fun isAdmin(role: String):Boolean {
         return role=="Admin"
     }
 

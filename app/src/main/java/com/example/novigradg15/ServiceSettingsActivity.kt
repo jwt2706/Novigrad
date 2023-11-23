@@ -137,11 +137,7 @@ class CustomListAdapter(context: Context, data: ArrayList<ListItem>) :
                     data.remove(listItem) // Remove the item from the data list
                     notifyDataSetChanged()
                 }
-//                .addOnFailureListener { e ->
-//
-//                }
         }
-
         return view
     }
 }

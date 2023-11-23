@@ -3,7 +3,8 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
-class isAdminTest {
+
+class IsAdminTest {
 
     @Test
     fun isAdminTest() {
