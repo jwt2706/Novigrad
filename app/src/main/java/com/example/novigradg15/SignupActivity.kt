@@ -86,8 +86,25 @@ class SignupActivity : AppCompatActivity() {
         this.licenseLevel = findViewById<Spinner>(R.id.driverLicenseSpinner).selectedItem.toString()
         this.role = findViewById<Spinner>(R.id.roleSpinner).selectedItem.toString()
 
+        val username = this.username
+        val email = this.email
+        val password = this.password
+        val licenceLevel = this.licenseLevel
+        val role = this.role
+
         //attempts to create an account on the database with the submitted credentials
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+        createAccount(username, email, password, licenceLevel, role)
+    }
+
+    public fun createAccount(
+        username: String,
+        email: String,
+        password: String,
+        licenceLevel: String,
+        role: String
+    ):Boolean {
+        var success = false
+        auth.createUserWithEmailAndPassword(this.email, this.password).addOnCompleteListener { task ->
             if(task.isSuccessful) {
 
                 val userId = auth.currentUser?.uid
@@ -97,13 +114,13 @@ class SignupActivity : AppCompatActivity() {
                     "userName" to username,
                     "email" to email,
                     "role" to role,
-                    "licenseLevel" to licenseLevel,
+                    "licenseLevel" to licenceLevel,
                 )
                 db.document(userId!!)
                     .set(user)
                     .addOnCompleteListener {saveData ->
                         if (saveData.isSuccessful) {
-
+                            success = true
                             Toast.makeText(this, "Account creation successful.", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this,MainActivity::class.java))
                             finish()
@@ -117,6 +134,7 @@ class SignupActivity : AppCompatActivity() {
         }.addOnFailureListener { e ->
             Toast.makeText(applicationContext,e.localizedMessage,Toast.LENGTH_LONG).show()
         }
+        return success
     }
 
     private fun uploadLicenseBtnListener() {

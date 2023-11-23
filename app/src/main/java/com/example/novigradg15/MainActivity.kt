@@ -47,32 +47,39 @@ class MainActivity : ComponentActivity() {
         if (email == "" || password == "") {
             Toast.makeText(this, "Missing credentials!", Toast.LENGTH_SHORT).show()
         } else {
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
-                if (it.isSuccessful) {
-                    Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show()
-                        db.get()
-                            .addOnSuccessListener { documentSnapshot ->
-                                if (documentSnapshot.exists()) {
-                                    val data = documentSnapshot.data
-                                    val role = data?.get("role") as? String
-                                    if (role == "Admin") {
-                                        startActivity(Intent(this,AdminWelcomeActivity::class.java))
-                                        finish()
-                                    } else {
-                                        startActivity(Intent(this,WelcomeActivity::class.java))
-                                        finish()
-                                    }
-                                } else {
-                                    Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
-                            }
-                } else
-                    Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
-            }
+            logIn(email, password)
         }
+    }
+
+    fun logIn(email: String, password: String):Boolean {
+        var success = false
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
+            if (it.isSuccessful) {
+                Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show()
+                db.get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        success = true
+                        if (documentSnapshot.exists()) {
+                            val data = documentSnapshot.data
+                            val role = data?.get("role") as? String
+                            if (role == "Admin") {
+                                startActivity(Intent(this, AdminWelcomeActivity::class.java))
+                                finish()
+                            } else {
+                                startActivity(Intent(this, WelcomeActivity::class.java))
+                                finish()
+                            }
+                        } else {
+                            Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
+                    }
+            } else
+                Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
+        }
+        return success
     }
 
     private fun signupBtnListener() {

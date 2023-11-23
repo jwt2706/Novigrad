@@ -79,8 +79,7 @@ class ModifyServiceActivity : AppCompatActivity() {
 
             }
                 .addOnFailureListener { e ->
-
-
+                    Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
                 }
 
         // ADD SERVICE OBJECT TO DATABASE HERE
