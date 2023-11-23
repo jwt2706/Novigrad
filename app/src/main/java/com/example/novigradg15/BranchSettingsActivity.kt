@@ -104,13 +104,6 @@ class BranchCustomListAdapter(context: Context, data: ArrayList<BranchListItem>)
                 .addOnSuccessListener {
                     data.remove(listItem) // Remove the item from the data list
                     notifyDataSetChanged()
-                    /*FirebaseAuth.getInstance().deleteUser(userID)
-                        .addOnSuccessListener {
-                            Toast.makeText(context, "Account deleted.", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(context, "Account deletion failed.", Toast.LENGTH_LONG).show()
-                        }*/
                     Toast.makeText(context, "Account deleted.", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->

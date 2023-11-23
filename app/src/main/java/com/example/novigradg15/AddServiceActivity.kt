@@ -70,6 +70,5 @@ class AddServiceActivity : AppCompatActivity() {
             }.addOnFailureListener { e ->
                 Toast.makeText(applicationContext,e.localizedMessage,Toast.LENGTH_LONG).show()
             }
-
     }
 }

@@ -81,18 +81,13 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     testImplementation("junit:junit:4.13.2")
-
     testImplementation("androidx.test:core:1.5.0")
-
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
-
     testImplementation("org.mockito:mockito-inline:3.11.2")
-
     testImplementation("org.mockito:mockito-core:2.8.47")
     testImplementation("org.powermock:powermock-core:1.7.4")
     testImplementation("org.powermock:powermock-module-testng:1.7.4")
     testImplementation("org.powermock:powermock-api-mockito2:1.7.4")
-
-
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
 
 }

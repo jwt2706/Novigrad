@@ -55,6 +55,9 @@ class WelcomeActivity : AppCompatActivity() {
             }
     }
 
+    public fun isAdmin(role: String):Boolean {
+        return role=="Admin"
+    }
 
 
 }
