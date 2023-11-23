@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseUser
 
 
 class BranchSettingsActivity : AppCompatActivity() {
@@ -95,14 +96,16 @@ class BranchCustomListAdapter(context: Context, data: ArrayList<BranchListItem>)
             val db = FirebaseFirestore.getInstance()
             val collectionReference = db.collection("users")
             val documentReference = collectionReference.document(listItem.id)
+            val userID = listItem.id
             documentReference.delete()
                 .addOnSuccessListener {
                     data.remove(listItem) // Remove the item from the data list
                     notifyDataSetChanged()
+                    Toast.makeText(context, "Account deleted.", Toast.LENGTH_SHORT).show()
                 }
-//                .addOnFailureListener { e ->
-//
-//                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+                }
         }
 
         return view
