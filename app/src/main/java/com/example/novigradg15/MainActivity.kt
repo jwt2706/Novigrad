@@ -65,6 +65,16 @@ class MainActivity : ComponentActivity() {
                             if (role == "Admin") {
                                 startActivity(Intent(this, AdminWelcomeActivity::class.java))
                                 finish()
+                            } else if (role == "Employee") {
+                                startActivity(Intent(this, EmployeeWelcomeBranchActivity::class.java))
+                                finish()
+                                // JACOB:
+                                // if employee branch exists:
+                                // startActivity(Intent(this, EmployeeWelcomeBranchActivity::class.java))
+                                // finish()
+                                // if it doesn't:
+                                // startActivity(Intent(this, EmployeeWelcomeNoBranchActivity::class.java))
+                                // finish()
                             } else {
                                 startActivity(Intent(this, WelcomeActivity::class.java))
                                 finish()

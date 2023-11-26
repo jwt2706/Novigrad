@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context=".EmployeeModifyBranchActivity">
+
+    <!-- Header for the Modify Branch Screen -->
+    <TextView
+        android:id="@+id/headerModifyBranch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Modify Branch"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <!-- Label for Branch Name -->
+    <TextView
+        android:id="@+id/labelBranchName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Branch Name"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/headerModifyBranch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Input Field for Branch Name -->
+    <EditText
+        android:id="@+id/editBranchName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="12dp"
+        android:hint="Enter Branch Name"
+        android:textColor="@color/white"
+        android:background="#30ffffff"
+        android:textColorHint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/labelBranchName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Label for Branch Address -->
+    <TextView
+        android:id="@+id/labelBranchAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Branch Address"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/editBranchName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Input Field for Branch Address -->
+    <EditText
+        android:id="@+id/editBranchAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="12dp"
+        android:hint="Enter Branch Address"
+        android:background="#30ffffff"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/labelBranchAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Label for Branch Telephone -->
+    <TextView
+        android:id="@+id/labelBranchTelephone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Branch Telephone"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/editBranchAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Input Field for Branch Telephone -->
+    <EditText
+        android:id="@+id/editBranchTelephone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="12dp"
+        android:hint="Enter Branch Telephone"
+        android:background="#30ffffff"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/labelBranchTelephone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Label for Branch Services -->
+    <TextView
+        android:id="@+id/labelBranchServices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Branch Services"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/editBranchTelephone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/multiSelectBranchServices"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Select Branch Services"
+        android:inputType="none"
+        android:focusable="false"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/labelBranchServices"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Label for Working Hours -->
+    <TextView
+        android:id="@+id/labelWorkingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monday working hours"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/multiSelectBranchServices"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <LinearLayout
+        android:id="@+id/mondayLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelWorkingHours"
+        >
+            <TextView
+                android:id="@+id/mondayFromLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From:"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelWorkingHours"
+                />
+            <EditText
+                android:id="@+id/mondayFromHours"
+                android:layout_width="94dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#30ffffff"
+                android:hint="HH:mm"
+                android:paddingLeft="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+            <TextView
+                android:id="@+id/mondayToLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To:"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelWorkingHours"
+                />
+            <EditText
+                android:id="@+id/mondayToHours"
+                android:layout_width="94dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#30ffffff"
+                android:hint="HH:mm"
+                android:paddingLeft="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/labelTuesdayWorkingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tuesday working hours"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/mondayLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/tuesdayLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/labelTuesdayWorkingHours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/tuesdayFromLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/tuesdayFromHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/tuesdayToLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/tuesdayToHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/labelWednesdayWorkingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wednesday working hours"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tuesdayLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/wednesdayLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/labelWednesdayWorkingHours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/wednesdayFromLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/wednesdayFromHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/wednesdayToLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/wednesdayToHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+    <!-- Thursday Working Hours -->
+    <TextView
+        android:id="@+id/labelThursdayWorkingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thursday working hours"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/wednesdayLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/thursdayLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/labelThursdayWorkingHours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/thursdayFromLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/thursdayFromHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/thursdayToLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/thursdayToHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+    <!-- Friday Working Hours -->
+    <TextView
+        android:id="@+id/labelFridayWorkingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Friday working hours"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/thursdayLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/fridayLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/labelFridayWorkingHours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/fridayFromLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/fridayFromHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/fridayToLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/fridayToHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+    <!-- Saturday Working Hours -->
+    <TextView
+        android:id="@+id/labelSaturdayWorkingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saturday working hours"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/fridayLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/saturdayLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/labelSaturdayWorkingHours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/saturdayFromLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/saturdayFromHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/saturdayToLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/saturdayToHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+    <!-- Sunday Working Hours -->
+    <TextView
+        android:id="@+id/labelSundayWorkingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sunday working hours"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/saturdayLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/sundayLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/labelSundayWorkingHours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/sundayFromLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/sundayFromHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/sundayToLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To:"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/sundayToHours"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#30ffffff"
+            android:hint="HH:mm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/saveChangesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sundayLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/design_default_color_background"
+        android:text="Modify Branch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sundayLayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

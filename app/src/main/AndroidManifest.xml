@@ -11,9 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".ModifyServiceActivity"
+            android:name=".EmployeeAddBranchActivity"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents"/>
+        <activity
+            android:name=".EmployeeModifyBranchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents"/>
+        <activity
+            android:name=".EmployeeWelcomeNoBranchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents"/>
+        <activity
+            android:name=".EmployeeWelcomeBranchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents"/>
+        <activity
+            android:name=".ModifyServiceActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents" />
         <activity
             android:name=".AdminWelcomeActivity"
             android:exported="false"
