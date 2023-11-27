@@ -51,7 +51,7 @@ class EmployeeWelcomeNoBranchActivity : AppCompatActivity() {
     }
 
     private fun branchSettingsBtnListener() {
-        startActivity(Intent(this,BranchSettingsActivity::class.java))
+        startActivity(Intent(this,EmployeeAddBranchActivity::class.java))
         finish()
     }
 

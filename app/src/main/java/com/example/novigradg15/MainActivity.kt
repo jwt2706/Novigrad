@@ -66,11 +66,10 @@ class MainActivity : ComponentActivity() {
                                 startActivity(Intent(this, AdminWelcomeActivity::class.java))
                                 finish()
                             } else if (role == "Employee") {
+                                startActivity(Intent(this, EmployeeWelcomeNoBranchActivity::class.java))
 
-
-                                val userId = auth.currentUser?.uid
+                                /*val userId = auth.currentUser?.uid
                                 val db = FirebaseFirestore.getInstance().collection("branches")
-
                                 db.whereEqualTo("uid", userId)
                                     .get()
                                     .addOnSuccessListener {
@@ -82,7 +81,7 @@ class MainActivity : ComponentActivity() {
                                         Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
                                         startActivity(Intent(this, EmployeeWelcomeNoBranchActivity::class.java))
                                         finish()
-                                    }
+                                    }*/
                             } else {
                                 startActivity(Intent(this, WelcomeActivity::class.java))
                                 finish()

@@ -200,7 +200,7 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
             .addOnCompleteListener {saveData ->
                 if (saveData.isSuccessful) {
                     Toast.makeText(this, "Branch created.", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this,WelcomeActivity::class.java))
+                    startActivity(Intent(this,EmployeeWelcomeBranchActivity::class.java))
                     finish()
 
                 } else {
