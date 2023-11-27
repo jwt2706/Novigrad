@@ -77,7 +77,7 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
         db.get()
             .addOnSuccessListener { snapshot ->
                 for (document in snapshot) {
-                    val name = document.getString("name")
+                    val name = document.getString("address") //TEMPORARILY PULLING ADDRESS RATHER THAN NAME TO PREVENT CRASH FOR NOW
                     name?.let {
                         services.add(it)
                     }
@@ -154,7 +154,7 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance().collection("branches")
 
-        val timeSlots = arrayOf(mondayToHoursText, mondayFromHoursText, tuesdayFromHoursText, tuesdayToHoursText, wednesdayFromHoursText, wednesdayToHoursText, thursdayFromHoursText, thursdayToHoursText, fridayFromHoursText, fridayToHoursText, saturdayFromHoursText, saturdayToHoursText, sundayFromHoursText, sundayToHoursText)
+        val timeSlots = listOf(mondayToHoursText, mondayFromHoursText, tuesdayFromHoursText, tuesdayToHoursText, wednesdayFromHoursText, wednesdayToHoursText, thursdayFromHoursText, thursdayToHoursText, fridayFromHoursText, fridayToHoursText, saturdayFromHoursText, saturdayToHoursText, sundayFromHoursText, sundayToHoursText)
 
         val data = hashMapOf(
             "name" to selectedServices,
