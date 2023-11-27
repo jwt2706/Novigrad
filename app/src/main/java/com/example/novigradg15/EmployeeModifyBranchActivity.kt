@@ -47,6 +47,8 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        editBranchAddress = findViewById(R.id.editBranchAddress)
+        editBranchTelephone = findViewById(R.id.editBranchTelephone)
         mondayToHours = findViewById(R.id.mondayToHours)
         mondayFromHours = findViewById(R.id.mondayFromHours)
         tuesdayToHours = findViewById(R.id.tuesdayToHours)
@@ -66,13 +68,9 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
 
         modifyBtn.setOnClickListener {
             val phoneNumber = editBranchTelephone.text.toString()
-            // Regex pattern for phone number validation
-            val pattern = Regex("^\\+[1-9]\\d{1,14}\$")
-            if (pattern.matches(phoneNumber)) {
-                // Phone number is valid
+            if (isPhoneNumberValid(phoneNumber)) {
                 saveModifyChanges()
             } else {
-                // Phone number is not valid
                 Toast.makeText(this, "Phone number is not valid.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -135,9 +133,7 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
-                // Handle any errors that occur while retrieving the documents
             }
-
     }
 
     private fun saveModifyChanges() {
@@ -183,5 +179,15 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
                     Toast.makeText(this, "Save failed. Please try again.", Toast.LENGTH_LONG).show()
                 }
             }
+    }
+    fun isPhoneNumberValid(phoneNumber: String):Boolean {
+        // Regex pattern for phone number validation
+        val pattern = Regex("\\d{10}")
+        if (pattern.matches(phoneNumber)) {
+            // Phone number is valid
+            return true
+        }
+        // Phone number is not valid
+        return false
     }
 }

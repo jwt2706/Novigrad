@@ -59,13 +59,16 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
         addBtn = findViewById(R.id.saveChangesBtn)
 
         addBtn.setOnClickListener {
+            println("ATTEMPOTING PHONE CHECK")
             val phoneNumber = editBranchTelephone.text.toString()
             // Regex pattern for phone number validation
             val pattern = Regex("^\\+[1-9]\\d{1,14}\$")
             if (pattern.matches(phoneNumber)) {
+                println("PASSED")
                 // Phone number is valid
                 addNewBranch()
             } else {
+                println("FAILED LMAO")
                 // Phone number is not valid
                 Toast.makeText(this, "Phone number is not valid.", Toast.LENGTH_SHORT).show()
             }
@@ -160,7 +163,6 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
-                // Handle any errors that occur while retrieving the documents
             }
     }
 
