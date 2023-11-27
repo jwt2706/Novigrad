@@ -18,7 +18,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
 
     private lateinit var userId: String
     private lateinit var userInfo: DocumentReference
-    private lateinit var branchInfo: DocumentReference
+    private lateinit var branchInfo: CollectionReference
     private lateinit var auth: FirebaseAuth
     private lateinit var welcomeMessage: TextView
     private lateinit var roleMessage: TextView
@@ -31,7 +31,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         userId = auth.currentUser!!.uid
         userInfo = FirebaseFirestore.getInstance().collection("users").document(userId)
-        branchInfo = FirebaseFirestore.getInstance().collection("branches").document(userId)
+        branchInfo = FirebaseFirestore.getInstance().collection("branches")
 
         modifyBranchBtn = findViewById(R.id.modifyBranchBtn)
 
@@ -39,7 +39,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
         fetchAndWriteUserData()
 
         //get branch data from database
-        fetchAndWriteBranchData()
+        fetchAndWriteBranchData(userId)
 
         modifyBranchBtn.setOnClickListener() {
             modifyBranchBtnListener()
@@ -47,10 +47,12 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
 
     }
 
-    fun fetchAndWriteBranchData() { //DO NOT MAKE PRIVATE, IMMA USE THIS FOR A TEST
-        branchInfo.get()
+    fun fetchAndWriteBranchData(userId: String):Boolean { //DO NOT MAKE PRIVATE, IMMA USE THIS FOR A TEST
+        var documentFound = false
+        branchInfo.document(userId).get()
             .addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
+                    var documentFound = true
                     val data = documentSnapshot.data
                     val name = data?.get("name") as? String
                     val address = data?.get("address") as? String
@@ -65,6 +67,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
                     Toast.makeText(this, "Branch data not found.", Toast.LENGTH_LONG).show()
                 }
             }
+        return documentFound
     }
     private fun modifyBranchBtnListener() {
         startActivity(Intent(this,EmployeeModifyBranchActivity::class.java))
