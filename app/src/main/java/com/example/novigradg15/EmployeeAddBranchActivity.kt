@@ -59,18 +59,11 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
         addBtn = findViewById(R.id.saveChangesBtn)
 
         addBtn.setOnClickListener {
-            println("ATTEMPOTING PHONE CHECK")
             val phoneNumber = editBranchTelephone.text.toString()
-            // Regex pattern for phone number validation
-            val pattern = Regex("^\\+[1-9]\\d{1,14}\$")
-            if (pattern.matches(phoneNumber)) {
-                println("PASSED")
-                // Phone number is valid
+            if (isPhoneNumberValid(phoneNumber)) {
                 addNewBranch()
             } else {
-                println("FAILED LMAO")
-                // Phone number is not valid
-                Toast.makeText(this, "Phone number is not valid.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Phone number is not valid. Must be 10 digits.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -209,5 +202,15 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
                     Toast.makeText(this, "Save failed. Please try again.", Toast.LENGTH_LONG).show()
                 }
             }
+    }
+    private fun isPhoneNumberValid(phoneNumber: String):Boolean {
+        // Regex pattern for phone number validation
+        val pattern = Regex("\\d{10}")
+        if (pattern.matches(phoneNumber)) {
+            // Phone number is valid
+            return true
+        }
+        // Phone number is not valid
+        return false
     }
 }

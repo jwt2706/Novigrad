@@ -59,6 +59,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
 
                     // DO WHAT YOU WANT WITH THE DATA HERE
                     // (btw all the time slots are just in an array so you can make a for loop or something)
+                    // btw you can make this function return the data too, if you want
 
                 } else {
                     Toast.makeText(this, "Branch data not found.", Toast.LENGTH_LONG).show()
@@ -82,7 +83,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
                     roleMessage = findViewById(R.id.roleMessage)
                     roleMessage.text  = "Role: $role"
                 } else {
-                    Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "User data not found.", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { e ->

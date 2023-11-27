@@ -16,10 +16,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 
 import com.google.firebase.firestore.QuerySnapshot
 
-
-
-
-
 class EmployeeModifyBranchActivity : AppCompatActivity() {
     private lateinit var multiSelectBranchServices: MultiAutoCompleteTextView
     private lateinit var editBranchAddress: EditText
@@ -71,7 +67,7 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
             if (isPhoneNumberValid(phoneNumber)) {
                 saveModifyChanges()
             } else {
-                Toast.makeText(this, "Phone number is not valid.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Phone number is not valid. Must be 10 digits.", Toast.LENGTH_SHORT).show()
             }
         }
 
