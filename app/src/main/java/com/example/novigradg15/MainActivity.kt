@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         var success = false
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
-                Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Successful login.", Toast.LENGTH_SHORT).show()
                 db.get()
                     .addOnSuccessListener { documentSnapshot ->
                         success = true
@@ -65,6 +65,21 @@ class MainActivity : ComponentActivity() {
                             if (role == "Admin") {
                                 startActivity(Intent(this, AdminWelcomeActivity::class.java))
                                 finish()
+                            } else if (role == "Employee") {
+                                val userId = auth.currentUser?.uid
+                                val db = FirebaseFirestore.getInstance().collection("branches").document(userId!!)
+                                db.get()
+                                    .addOnSuccessListener { snapshot ->
+                                        if (snapshot.exists()) {
+                                            Toast.makeText(this, "Branch found.", Toast.LENGTH_SHORT).show()
+                                            startActivity(Intent(this, EmployeeWelcomeBranchActivity::class.java))
+                                            finish()
+                                        } else {
+                                            Toast.makeText(this, "No branch not found.", Toast.LENGTH_LONG).show()
+                                            startActivity(Intent(this, EmployeeWelcomeNoBranchActivity::class.java))
+                                            finish()
+                                        }
+                                    }
                             } else {
                                 startActivity(Intent(this, WelcomeActivity::class.java))
                                 finish()
