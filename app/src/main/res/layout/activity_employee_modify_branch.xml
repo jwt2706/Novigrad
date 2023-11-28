@@ -12,7 +12,6 @@
     android:background="@drawable/login_background"
     tools:context=".EmployeeModifyBranchActivity">
 
-    <!-- Header for the Modify Branch Screen -->
     <TextView
         android:id="@+id/headerModifyBranch"
         android:layout_width="wrap_content"
@@ -27,7 +26,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <!-- Label for Branch Name -->
     <TextView
         android:id="@+id/labelBranchName"
         android:layout_width="wrap_content"
@@ -40,7 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Input Field for Branch Name -->
     <EditText
         android:id="@+id/editBranchName"
         android:layout_width="0dp"
@@ -57,7 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Label for Branch Address -->
     <TextView
         android:id="@+id/labelBranchAddress"
         android:layout_width="wrap_content"
@@ -70,7 +66,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Input Field for Branch Address -->
     <EditText
         android:id="@+id/editBranchAddress"
         android:layout_width="0dp"
@@ -87,7 +82,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Label for Branch Telephone -->
     <TextView
         android:id="@+id/labelBranchTelephone"
         android:layout_width="wrap_content"
@@ -100,7 +94,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Input Field for Branch Telephone -->
     <EditText
         android:id="@+id/editBranchTelephone"
         android:layout_width="0dp"
@@ -117,7 +110,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Label for Branch Services -->
     <TextView
         android:id="@+id/labelBranchServices"
         android:layout_width="wrap_content"
@@ -143,7 +135,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Label for Working Hours -->
     <TextView
         android:id="@+id/labelWorkingHours"
         android:layout_width="wrap_content"

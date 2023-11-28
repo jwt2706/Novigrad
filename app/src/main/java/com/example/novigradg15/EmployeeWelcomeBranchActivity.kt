@@ -175,6 +175,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
     }
 
     //FIX FOR A UI GLITCH
+    //Makes services list show completely without the need to scroll
     fun setListViewHeightBasedOnChildren(listView: ListView) {
         val listAdapter = listView.adapter ?: return
 
