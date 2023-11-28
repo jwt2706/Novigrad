@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class EmployeeAddBranchActivity : AppCompatActivity() {
     private lateinit var multiSelectBranchServices: MultiAutoCompleteTextView
+    private lateinit var editBranchName: EditText
     private lateinit var editBranchAddress: EditText
     private lateinit var editBranchTelephone: EditText
     private lateinit var mondayToHours: EditText
@@ -41,6 +42,7 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        editBranchName = findViewById(R.id.editBranchAddress)
         editBranchAddress = findViewById(R.id.editBranchAddress)
         editBranchTelephone = findViewById(R.id.editBranchTelephone)
         mondayToHours = findViewById(R.id.mondayToHours)
@@ -69,16 +71,13 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
             }
         }
 
-        val db = FirebaseFirestore.getInstance().collection("branches")
-        val services = ArrayList<String>()
+        val db = FirebaseFirestore.getInstance().collection("services")
+        var availableServices = ArrayList<String>()
         //list of the services fetched from the DB
         db.get()
             .addOnSuccessListener { snapshot ->
                 for (document in snapshot) {
-                    val name = document.getString("address") //TEMPORARILY PULLING ADDRESS RATHER THAN NAME TO PREVENT CRASH FOW NOW
-                    name?.let {
-                        services.add(it)
-                    }
+                    availableServices.add(document.reference.id)
                 }
 
                 val timeEditTexts = arrayOf(
@@ -129,7 +128,7 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
                 // Branch services logic start
                 multiSelectBranchServices = findViewById(R.id.multiSelectBranchServices)
                 val adapter =
-                    ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, services)
+                    ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, availableServices)
                 multiSelectBranchServices.setAdapter(adapter)
                 multiSelectBranchServices.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
                 val selectedItems = mutableSetOf<String>()
@@ -160,8 +159,8 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
             }
     }
-
     fun addNewBranch() {
+        val name = editBranchName.text.toString()
         val address = editBranchAddress.text.toString()
         val telephone = editBranchTelephone.text.toString()
         val selectedServices = multiSelectBranchServices.text.toString().split(",").map { it.trim() }
@@ -186,10 +185,11 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
         val timeSlots = listOf(mondayToHoursText, mondayFromHoursText, tuesdayFromHoursText, tuesdayToHoursText, wednesdayFromHoursText, wednesdayToHoursText, thursdayFromHoursText, thursdayToHoursText, fridayFromHoursText, fridayToHoursText, saturdayFromHoursText, saturdayToHoursText, sundayFromHoursText, sundayToHoursText)
 
         val data = hashMapOf(
-            "name" to selectedServices,
+            "name" to name,
             "address" to address,
             "telephone" to telephone,
             "timeSlots" to timeSlots,
+            "services" to selectedServices
         )
 
         db.document(userId!!)

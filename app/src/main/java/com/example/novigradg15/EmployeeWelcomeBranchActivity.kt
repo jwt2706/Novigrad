@@ -23,6 +23,17 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
     private lateinit var welcomeMessage: TextView
     private lateinit var roleMessage: TextView
     private lateinit var modifyBranchBtn: MaterialButton
+    private lateinit var branchName: TextView
+    private lateinit var branchAddress: TextView
+    private lateinit var branchTelephone: TextView
+    private lateinit var branchServices: TextView
+    private lateinit var mondayHours: TextView
+    private lateinit var tuesdayHours: TextView
+    private lateinit var wednesdayHours: TextView
+    private lateinit var thursdayHours: TextView
+    private lateinit var fridayHours: TextView
+    private lateinit var saturdayHours: TextView
+    private lateinit var sundayHours: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +45,18 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
         branchInfo = FirebaseFirestore.getInstance().collection("branches")
 
         modifyBranchBtn = findViewById(R.id.modifyBranchBtn)
+
+        branchName = findViewById(R.id.branchName)
+        branchAddress = findViewById(R.id.branchAddress)
+        branchTelephone = findViewById(R.id.branchTelephone)
+        branchServices = findViewById(R.id.branchServices)
+        mondayHours = findViewById(R.id.mondayHours)
+        tuesdayHours = findViewById(R.id.tuesdayHours)
+        wednesdayHours = findViewById(R.id.wednesdayHours)
+        thursdayHours = findViewById(R.id.thursdayHours)
+        fridayHours = findViewById(R.id.fridayHours)
+        saturdayHours = findViewById(R.id.saturdayHours)
+        sundayHours = findViewById(R.id.sundayHours)
 
         //get user data from database
         fetchAndWriteUserData()
@@ -58,10 +81,29 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
                     val address = data?.get("address") as? String
                     val telephone = data?.get("telephone") as? String
                     val timeSlots = data?.get("timeSlots") as? List<String>
+                    val services = data?.get("services") as? List<String>
 
-                    // DO WHAT YOU WANT WITH THE DATA HERE
-                    // (btw all the time slots are just in an array so you can make a for loop or something)
-                    // btw you can make this function return the data too, if you want
+                    branchName.text = "Name: $name"
+                    branchAddress.text = "Address: $address"
+
+                    if (telephone != null) {
+                        branchTelephone.text = "${telephone.substring(0, 3)} ${telephone.substring(3, 6)} ${telephone.substring(6, 10)}"
+                    }
+
+                    if (services != null) {
+                        branchServices.text = "Services: ${services.joinToString(separator = ", ")}"
+                    }
+
+                    if (timeSlots != null) {
+                        mondayHours.text = "Monday: ${timeSlots[0]} - ${timeSlots[1]}"
+                        tuesdayHours.text = "Tuesday: ${timeSlots[2]} - ${timeSlots[3]}"
+                        wednesdayHours.text = "Wednesday: ${timeSlots[4]} - ${timeSlots[5]}"
+                        thursdayHours.text = "Thursday: ${timeSlots[6]} - ${timeSlots[7]}"
+                        fridayHours.text = "Friday: ${timeSlots[8]} - ${timeSlots[9]}"
+                        saturdayHours.text = "Saturday: ${timeSlots[10]} - ${timeSlots[11]}"
+                        sundayHours.text = "Sunday: ${timeSlots[12]} - ${timeSlots[13]}"
+                    }
+
 
                 } else {
                     Toast.makeText(this, "Branch data not found.", Toast.LENGTH_LONG).show()

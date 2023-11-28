@@ -11,13 +11,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 
 import com.google.firebase.firestore.QuerySnapshot
 
 class EmployeeModifyBranchActivity : AppCompatActivity() {
+    private lateinit var userId: String
+    private lateinit var branchInfo: CollectionReference
     private lateinit var multiSelectBranchServices: MultiAutoCompleteTextView
+    private lateinit var editBranchName: EditText
     private lateinit var editBranchAddress: EditText
     private lateinit var editBranchTelephone: EditText
     private lateinit var mondayToHours: EditText
@@ -42,7 +46,11 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_employee_modify_branch)
 
         auth = FirebaseAuth.getInstance()
+        userId = auth.currentUser!!.uid
 
+        branchInfo = FirebaseFirestore.getInstance().collection("branches")
+
+        editBranchName = findViewById(R.id.editBranchName)
         editBranchAddress = findViewById(R.id.editBranchAddress)
         editBranchTelephone = findViewById(R.id.editBranchTelephone)
         mondayToHours = findViewById(R.id.mondayToHours)
@@ -71,16 +79,13 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
             }
         }
 
-        val db = FirebaseFirestore.getInstance().collection("branches")
-        val services = ArrayList<String>()
+        val db = FirebaseFirestore.getInstance().collection("services")
+        var availableServices = ArrayList<String>()
         //list of the services fetched from the DB
         db.get()
             .addOnSuccessListener { snapshot ->
                 for (document in snapshot) {
-                    val name = document.getString("address") //TEMPORARILY PULLING ADDRESS RATHER THAN NAME TO PREVENT CRASH FOR NOW
-                    name?.let {
-                        services.add(it)
-                    }
+                    availableServices.add(document.reference.id)
                 }
 
                 val timeEditTexts = arrayOf(mondayToHours, mondayFromHours, tuesdayFromHours, tuesdayToHours, wednesdayFromHours, wednesdayToHours, thursdayFromHours, thursdayToHours, fridayFromHours, fridayToHours, saturdayFromHours, saturdayToHours, sundayFromHours, sundayToHours)
@@ -101,7 +106,7 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
 
                 // Branch services logic start
                 multiSelectBranchServices = findViewById(R.id.multiSelectBranchServices)
-                val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, services)
+                val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, availableServices)
                 multiSelectBranchServices.setAdapter(adapter)
                 multiSelectBranchServices.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
                 val selectedItems = mutableSetOf<String>()
@@ -130,9 +135,53 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
             }
+
+        fetchAndWriteBranchData(userId)
+    }
+
+    fun fetchAndWriteBranchData(userId: String):Boolean { //DO NOT MAKE PRIVATE, IMMA USE THIS FOR A TEST
+        var documentFound = false
+        branchInfo.document(userId).get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    var documentFound = true
+                    val data = documentSnapshot.data
+                    val name = data?.get("name") as? String
+                    val address = data?.get("address") as? String
+                    val telephone = data?.get("telephone") as? String
+                    val timeSlots = data?.get("timeSlots") as? List<String>
+
+                    editBranchName.setText(name)
+                    editBranchAddress.setText(address)
+                    editBranchTelephone.setText(telephone)
+
+                    if (timeSlots != null) {
+                        mondayToHours.setText("${timeSlots[0]}")
+                        mondayFromHours.setText("${timeSlots[1]}")
+                        tuesdayToHours.setText("${timeSlots[2]}")
+                        tuesdayFromHours.setText("${timeSlots[3]}")
+                        wednesdayFromHours.setText("${timeSlots[4]}")
+                        wednesdayToHours.setText("${timeSlots[5]}")
+                        thursdayFromHours.setText("${timeSlots[6]}")
+                        thursdayToHours.setText("${timeSlots[7]}")
+                        fridayFromHours.setText("${timeSlots[8]}")
+                        fridayToHours.setText("${timeSlots[9]}")
+                        saturdayFromHours.setText("${timeSlots[10]}")
+                        saturdayToHours.setText("${timeSlots[11]}")
+                        sundayFromHours.setText("${timeSlots[12]}")
+                        sundayToHours.setText("${timeSlots[13]}")
+                    }
+
+
+                } else {
+                    Toast.makeText(this, "Branch data not found.", Toast.LENGTH_LONG).show()
+                }
+            }
+        return documentFound
     }
 
     private fun saveModifyChanges() {
+        val name = editBranchName.text.toString()
         val address = editBranchAddress.text.toString()
         val telephone = editBranchTelephone.text.toString()
         val selectedServices = multiSelectBranchServices.text.toString().split(",").map { it.trim() }
@@ -157,10 +206,11 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
         val timeSlots = listOf(mondayToHoursText, mondayFromHoursText, tuesdayFromHoursText, tuesdayToHoursText, wednesdayFromHoursText, wednesdayToHoursText, thursdayFromHoursText, thursdayToHoursText, fridayFromHoursText, fridayToHoursText, saturdayFromHoursText, saturdayToHoursText, sundayFromHoursText, sundayToHoursText)
 
         val data = hashMapOf(
-            "name" to selectedServices,
+            "name" to name,
             "address" to address,
             "telephone" to telephone,
             "timeSlots" to timeSlots,
+            "services" to selectedServices
         )
 
         db.document(userId!!)
