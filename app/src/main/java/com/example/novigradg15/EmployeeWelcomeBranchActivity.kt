@@ -1,11 +1,17 @@
 package com.example.novigradg15
 
 import android.app.Activity
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.EditText
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
@@ -34,6 +40,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
     private lateinit var fridayHours: TextView
     private lateinit var saturdayHours: TextView
     private lateinit var sundayHours: TextView
+    private lateinit var serviceRequestListView: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +74,37 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
         modifyBranchBtn.setOnClickListener() {
             modifyBranchBtnListener()
         }
+
+        // THIS IS SET UP WITH PLACEHOLDER VALUES, WILL CHANGE IN NEXT DELIVERABLE
+        serviceRequestListView = findViewById(R.id.serviceRequestList)
+        var data = ArrayList<ServiceRequestListItem>();
+
+        //Placeholders
+        data.add(
+            ServiceRequestListItem(
+                "Ahmed Nasr",
+                "24/5",
+                "Drivers license"
+            )
+        )
+        data.add(
+            ServiceRequestListItem(
+                "Ibrahim Darwish",
+                "21/8",
+                "Health Card"
+            )
+        )
+        data.add(
+            ServiceRequestListItem(
+                "Daniel Morghati",
+                "1/1",
+                "ID card"
+            )
+        )
+        val adapter = ServiceRequestCustomListAdapter(this, data)
+        serviceRequestListView.adapter = adapter
+
+        setListViewHeightBasedOnChildren(serviceRequestListView)
 
     }
 
@@ -135,4 +173,75 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
     }
+
+    //FIX FOR A UI GLITCH
+    fun setListViewHeightBasedOnChildren(listView: ListView) {
+        val listAdapter = listView.adapter ?: return
+
+        var totalHeight = 0
+        for (i in 0 until listAdapter.count) {
+            val listItem = listAdapter.getView(i, null, listView)
+            listItem.measure(0, 0)
+            totalHeight += listItem.measuredHeight
+        }
+
+        val params = listView.layoutParams
+        params.height = totalHeight + (listView.dividerHeight * (listAdapter.count - 1))
+        listView.layoutParams = params
+        listView.requestLayout()
+    }
 }
+
+class ServiceRequestCustomListAdapter(context: Context, data: ArrayList<ServiceRequestListItem>) :
+    BaseAdapter() {
+    private val context: Context
+    private val data: ArrayList<ServiceRequestListItem>
+
+    init {
+        this.context = context
+        this.data = data
+    }
+
+    override fun getCount(): Int {
+        return data.size
+    }
+
+    override fun getItem(position: Int): Any {
+        return data[position]
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val listItem = data[position]
+
+        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.service_request_list_item, parent, false)
+
+        val customerName = view.findViewById<TextView>(R.id.customerName)
+        val appointmentValue = view.findViewById<TextView>(R.id.appointmentValue)
+        val serviceValue = view.findViewById<TextView>(R.id.serviceValue)
+        val btnAccept = view.findViewById<Button>(R.id.btnAccept)
+        val btnDecline = view.findViewById<Button>(R.id.btnDecline)
+
+        customerName.text = listItem.customerName
+        appointmentValue.text = listItem.appointmentDate
+        serviceValue.text = listItem.serviceRequired
+
+        btnAccept.setOnClickListener {
+           // Accept service logic
+        }
+
+        btnDecline.setOnClickListener {
+            // Decline service logic
+        }
+        return view
+    }
+}
+
+class ServiceRequestListItem(
+    val customerName: String,
+    val appointmentDate: String,
+    val serviceRequired: String,
+)

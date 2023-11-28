@@ -42,7 +42,7 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        editBranchName = findViewById(R.id.editBranchAddress)
+        editBranchName = findViewById(R.id.editBranchName)
         editBranchAddress = findViewById(R.id.editBranchAddress)
         editBranchTelephone = findViewById(R.id.editBranchTelephone)
         mondayToHours = findViewById(R.id.mondayToHours)

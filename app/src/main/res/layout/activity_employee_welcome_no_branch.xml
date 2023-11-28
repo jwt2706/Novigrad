@@ -62,18 +62,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/warningMessage" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/serviceSettingsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/warningMessage"
-
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="164dp"
-        android:backgroundTint="@color/design_default_color_background"
-        android:text="New Service"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/warningMessage" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
