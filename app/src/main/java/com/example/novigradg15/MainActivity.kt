@@ -26,8 +26,6 @@ class MainActivity : ComponentActivity() {
         signupBtn = findViewById(R.id.signupbtn)
 
         auth = FirebaseAuth.getInstance()
-        userId = auth.currentUser!!.uid
-        db = FirebaseFirestore.getInstance().collection("users").document(userId)
 	
 	    //attempts login by verifying the submitted credentials on firebase
         loginBtn.setOnClickListener {
@@ -55,6 +53,8 @@ class MainActivity : ComponentActivity() {
         var success = false
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
+                userId = auth.currentUser!!.uid
+                db = FirebaseFirestore.getInstance().collection("users").document(userId)
                 Toast.makeText(this, "Successful login.", Toast.LENGTH_SHORT).show()
                 db.get()
                     .addOnSuccessListener { documentSnapshot ->

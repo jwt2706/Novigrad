@@ -9,10 +9,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -52,7 +54,7 @@ class ClientWelcomeActivity : AppCompatActivity() {
         //Placeholders
         originalBranchesList.add(
             BranchSearchListItem(
-                "Branch Name 1",
+                "uOttawa Dungeons",
                 "221 Green Branch",
                 "4444444444",
                 "Health Card"
@@ -239,13 +241,34 @@ class BranchesListAdapter(context: Context, data: ArrayList<BranchSearchListItem
         val servicesValue = view.findViewById<TextView>(R.id.servicesValue)
         val btnRequest = view.findViewById<Button>(R.id.btnRequest)
 
+        val serviceSpinner = view.findViewById<Spinner>(R.id.serviceSpinner)
+        val availableServices = ArrayList(listItem.servicesValue.split(','))
+        Log.d("TAG", availableServices.toString())
+        val adapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_spinner_item,
+            availableServices
+
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        serviceSpinner.adapter = adapter
+
         branchName.text = listItem.branchName
         addressValue.text = listItem.addressValue
         telephoneValue.text = listItem.telephoneValue
         servicesValue.text = listItem.servicesValue
 
         btnRequest.setOnClickListener {
-            // Request service logic
+            var intent = Intent(context, RequestVisitActivity::class.java)
+            val selectedService = serviceSpinner.selectedItem.toString()
+            if (selectedService == "Health Card") {
+                intent = Intent(context, HealthVisitActivity::class.java)
+            } else if (selectedService == "ID Card") {
+                intent = Intent(context, PhotoVisitActivity::class.java)
+            }
+            intent.putExtra("branchName", branchName.text.toString())
+            intent.putExtra("selectedService", selectedService)
+            context.startActivity(intent);
         }
         return view
     }

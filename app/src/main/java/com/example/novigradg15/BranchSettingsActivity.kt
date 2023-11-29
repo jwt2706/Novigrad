@@ -46,7 +46,6 @@ class BranchSettingsActivity : AppCompatActivity() {
                     )
                     if (doc.getString("role") == "Employee") {
                         data.add(item)
-                        Log.d("Tag222", doc.toString())
                     }
                 }
                 val adapter = BranchCustomListAdapter(this, data)

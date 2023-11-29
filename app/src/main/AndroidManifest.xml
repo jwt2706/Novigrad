@@ -11,9 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".SearchFiltersActivity"
+            android:name=".PhotoVisitActivity"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents"/>
+        <activity
+            android:name=".HealthVisitActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents"/>
+        <activity
+            android:name=".RequestVisitActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents" />
+        <activity
+            android:name=".SearchFiltersActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents" />
         <activity
             android:name=".EmployeeAddBranchActivity"
             android:exported="false"
