@@ -2,6 +2,7 @@ package com.example.novigradg15
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -24,6 +25,8 @@ class MainActivity : ComponentActivity() {
 
         loginBtn = findViewById(R.id.loginbtn)
         signupBtn = findViewById(R.id.signupbtn)
+
+        FirebaseAuth.getInstance().signOut()
 
         auth = FirebaseAuth.getInstance()
 	
@@ -62,6 +65,7 @@ class MainActivity : ComponentActivity() {
                         if (documentSnapshot.exists()) {
                             val data = documentSnapshot.data
                             val role = data?.get("role") as? String
+                            Log.d("ROLE", role.toString())
                             if (role == "Admin") {
                                 startActivity(Intent(this, AdminWelcomeActivity::class.java))
                                 finish()
