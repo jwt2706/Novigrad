@@ -2,6 +2,7 @@ package com.example.novigradg15
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -25,9 +26,9 @@ class MainActivity : ComponentActivity() {
         loginBtn = findViewById(R.id.loginbtn)
         signupBtn = findViewById(R.id.signupbtn)
 
+        FirebaseAuth.getInstance().signOut()
+
         auth = FirebaseAuth.getInstance()
-        userId = auth.currentUser!!.uid
-        db = FirebaseFirestore.getInstance().collection("users").document(userId)
 	
 	    //attempts login by verifying the submitted credentials on firebase
         loginBtn.setOnClickListener {
@@ -55,6 +56,8 @@ class MainActivity : ComponentActivity() {
         var success = false
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
+                userId = auth.currentUser!!.uid
+                db = FirebaseFirestore.getInstance().collection("users").document(userId)
                 Toast.makeText(this, "Successful login.", Toast.LENGTH_SHORT).show()
                 db.get()
                     .addOnSuccessListener { documentSnapshot ->
@@ -62,6 +65,7 @@ class MainActivity : ComponentActivity() {
                         if (documentSnapshot.exists()) {
                             val data = documentSnapshot.data
                             val role = data?.get("role") as? String
+                            Log.d("ROLE", role.toString())
                             if (role == "Admin") {
                                 startActivity(Intent(this, AdminWelcomeActivity::class.java))
                                 finish()
