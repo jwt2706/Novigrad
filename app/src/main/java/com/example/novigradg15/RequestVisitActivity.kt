@@ -190,7 +190,6 @@ class RequestVisitActivity : AppCompatActivity() {
                     }
                 }
             }
-
         return false
     }
 
@@ -208,8 +207,39 @@ class RequestVisitActivity : AppCompatActivity() {
             - firstName, lastName, address, date of birth, license level (will be null for some)
             - im leaving out the documents (they are images and saving that will be a big mess)
          */
-
         // BY THE WAY this needs to copied into healthvisitactivity and photovisitactivity but i will do that dont do it
+
+        // The database is called "requests". Access it like any other database.
+        val userId = auth.currentUser?.uid
+        val requestsDB = FirebaseFirestore.getInstance().collection("requests")
+
+        val data = hashMapOf(
+            "branchName" to branchName,
+            "customerName" to fetchUserName(),
+            "date" to date,
+            //TODO AHMED: uhhh idk uhh fix this or smth
+            //"selectedService" to multiSelectBranchServices.textToString(),
+            //"timeSelected" to timeSlots,
+            //"formData" to formData,
+        )
+
+        requestsDB.document(userId!!)
+            .set(data)
+            .addOnCompleteListener { saveData ->
+                if (saveData.isSuccessful) {
+                    Toast.makeText(this, "Data saved.", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Data save failed. Please try again.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+        }.addOnFailureListener { e ->
+            Toast.makeText(applicationContext,e.localizedMessage,Toast.LENGTH_LONG).show()
+        }
 
         val intent = Intent(this, ClientWelcomeActivity::class.java)
         intent.putExtra("branchAddress", "")
@@ -263,25 +293,21 @@ class RequestVisitActivity : AppCompatActivity() {
 //        return documentFound
 //    }
 
-//    private fun fetchAndWriteUserData() {
-//        userInfo.get()
-//            .addOnSuccessListener {documentSnapshot ->
-//                if (documentSnapshot.exists()) {
-//                    val data = documentSnapshot.data
-//                    val role = data?.get("role") as? String
-//                    val userName = data?.get("userName") as? String
-//                    //display data in welcome message
-//                    welcomeMessage = findViewById(R.id.welcomeMessage)
-//                    welcomeMessage.text  = "Welcome $userName!"
-//                    roleMessage = findViewById(R.id.roleMessage)
-//                    roleMessage.text  = "Role: $role"
-//                } else {
-//                    Toast.makeText(this, "User data not found.", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//            .addOnFailureListener { e ->
-//                Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
-//            }
-//    }
+    private fun fetchUserName(): String {
+        var userName = ""
+        userInfo.get()
+            .addOnSuccessListener {documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val data = documentSnapshot.data
+                    userName = (data?.get("userName") as? String).toString()
+                } else {
+                    Toast.makeText(this, "User data not found.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+        return userName
+    }
 
 }
