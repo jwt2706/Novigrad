@@ -11,21 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".EmployeeAddBranchActivity"
+            android:name=".SearchFiltersActivity"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents"/>
+        <activity
+            android:name=".EmployeeAddBranchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents" />
         <activity
             android:name=".EmployeeModifyBranchActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents"/>
+            android:theme="@style/Theme.MaterialComponents" />
         <activity
             android:name=".EmployeeWelcomeNoBranchActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents"/>
+            android:theme="@style/Theme.MaterialComponents" />
         <activity
             android:name=".EmployeeWelcomeBranchActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents"/>
+            android:theme="@style/Theme.MaterialComponents" />
         <activity
             android:name=".ModifyServiceActivity"
             android:exported="false"
@@ -47,7 +51,7 @@
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".ClientWelcomeActivity"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents" />
         <activity

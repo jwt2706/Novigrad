@@ -81,7 +81,13 @@ class MainActivity : ComponentActivity() {
                                         }
                                     }
                             } else {
-                                startActivity(Intent(this, WelcomeActivity::class.java))
+                                val intent = Intent(this, ClientWelcomeActivity::class.java)
+                                intent.putExtra("branchAddress", "")
+                                intent.putExtra("branchTelephone", "")
+                                intent.putExtra("services", ArrayList<String>())
+                                intent.putExtra("dayOfTheWeek", "")
+                                intent.putExtra("time", "")
+                                startActivity(intent)
                                 finish()
                             }
                         } else {

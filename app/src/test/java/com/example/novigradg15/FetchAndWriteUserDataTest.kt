@@ -8,7 +8,7 @@ class FetchAndWriteUserDataTest {
 
     @Test
     fun dbAccessTest() {
-        val welcomeActivity = mock(WelcomeActivity::class.java)
+        val welcomeActivity = mock(ClientWelcomeActivity::class.java)
         `when`(welcomeActivity.fetchAndWriteUserData()).thenReturn(true)
         assertEquals(true, welcomeActivity.fetchAndWriteUserData())
     }

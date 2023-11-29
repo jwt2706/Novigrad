@@ -8,21 +8,21 @@ class IsAdminTest {
 
     @Test
     fun isAdminTest() {
-        val welcomeActivity = mock(WelcomeActivity::class.java)
+        val welcomeActivity = mock(ClientWelcomeActivity::class.java)
         `when`(welcomeActivity.isAdmin("Admin")).thenReturn(true)
         assertEquals(true, welcomeActivity.isAdmin("Admin"))
     }
 
     @Test
     fun isCustomerTest() {
-        val welcomeActivity = mock(WelcomeActivity::class.java)
+        val welcomeActivity = mock(ClientWelcomeActivity::class.java)
         `when`(welcomeActivity.isAdmin("Customer")).thenReturn(false)
         assertEquals(false, welcomeActivity.isAdmin("Customer"))
     }
 
     @Test
     fun isEmployeeTest() {
-        val welcomeActivity = mock(WelcomeActivity::class.java)
+        val welcomeActivity = mock(ClientWelcomeActivity::class.java)
         `when`(welcomeActivity.isAdmin("Employee")).thenReturn(false)
         assertEquals(false, welcomeActivity.isAdmin("Employee"))
     }

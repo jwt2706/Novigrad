@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/branchName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_margin="5dp"
+            android:text="Branch name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/addressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address " />
+
+            <TextView
+                android:id="@+id/addressValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Address)"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/telephoneLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Telephone: " />
+
+            <TextView
+                android:id="@+id/telephoneValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Telephone)"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/servicseLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Services: " />
+
+            <TextView
+                android:id="@+id/servicesValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Services)"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginLeft="15dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Request a visit"
+                android:backgroundTint="@color/design_default_color_background" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
