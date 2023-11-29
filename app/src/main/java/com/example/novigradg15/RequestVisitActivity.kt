@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -16,11 +19,14 @@ import android.widget.AutoCompleteTextView
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.MultiAutoCompleteTextView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -47,6 +53,7 @@ class RequestVisitActivity : AppCompatActivity() {
     private lateinit var sundayHours: TextView
     private lateinit var date: EditText
     private lateinit var timeEdit: EditText
+    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,11 +122,44 @@ class RequestVisitActivity : AppCompatActivity() {
                 })
             }
 
+        // Prepares activity that shows image upload options
+
+        var uploadImageBtn = findViewById<MaterialButton>(R.id.uploadImageButton)
+        uploadImageBtn.setOnClickListener {
+            pickImageLauncher.launch(
+                Intent(MediaStore.ACTION_PICK_IMAGES)
+            )
+        }
+
+        pickImageLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode != Activity.RESULT_OK) {
+                    Toast.makeText(this, "No image selected.", Toast.LENGTH_SHORT).show()
+                } else {
+                    var imagePreview = findViewById<ImageView>(R.id.imagePreview)
+                    val uri = it.data?.data
+                    loadImageFromUri(this, imagePreview, uri)
+                }
+            }
 
         requestBtn.setOnClickListener {
             requestBtnListener()
         }
 
+    }
+
+    // Allows loading an image in an ImageView from a Uri
+    private fun loadImageFromUri(context: Context, image: ImageView, uri: Uri?) {
+        if (uri != null) {
+            try {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                image.setImageBitmap(bitmap)
+                inputStream?.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun getBranchByName(nameToFind: String): Boolean {

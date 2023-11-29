@@ -36,7 +36,7 @@ class BranchSettingsActivity : AppCompatActivity() {
         branchListView = findViewById(R.id.serviceList)
 
         var data = ArrayList<BranchListItem>();
-        db.get() //get all services from the database
+        db.get() //get all branches from the database
             .addOnSuccessListener { docs ->
                 for (doc in docs) {
                     val item = BranchListItem(

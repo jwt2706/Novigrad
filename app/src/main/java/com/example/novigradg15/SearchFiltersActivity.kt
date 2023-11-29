@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.MultiAutoCompleteTextView
@@ -17,9 +18,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 class SearchFiltersActivity : AppCompatActivity() {
     private lateinit var branchAddress: EditText
     private lateinit var branchTelephone: EditText
-    private lateinit var multiSelectBranchServices: MultiAutoCompleteTextView
-    private lateinit var dayOfTheWeek: Spinner
-//    private lateinit var timeEdit: EditText
+    private lateinit var serviceSpinner: Spinner
+    private lateinit var daySpinner: Spinner
+    private lateinit var timeEdit: EditText
     private lateinit var saveBtn: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class SearchFiltersActivity : AppCompatActivity() {
 
         branchAddress = findViewById(R.id.editBranchAddress)
         branchTelephone = findViewById(R.id.editBranchTelephone)
-//        dayOfTheWeek = findViewById(R.id.daySpinner)
+        daySpinner = findViewById(R.id.daySpinner)
         saveBtn = findViewById(R.id.saveChangesBtn)
         saveBtn.setOnClickListener {
             addFilters()
@@ -44,47 +45,42 @@ class SearchFiltersActivity : AppCompatActivity() {
                     availableServices.add(document.reference.id)
                 }
 
-                //Adding RegEx to Hours
-//                timeEdit = findViewById(R.id.time)
-//                timeEdit.addTextChangedListener(object : TextWatcher {
-//                        //These two are just needed to satisfy the TextWatcher interface
-//                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//                        override fun afterTextChanged(s: Editable) {
-//                            val time = s.toString()
-//                            if (time.matches(Regex("^([01]?[0-9]|2[0-3]):[0-5][0-9]\$")).not()) {
-//                                timeEdit.error = "Invalid time format. Use HH:MM."
-//                            }
-//                        }
-//                    })
+//                Adding RegEx to Hours
+                timeEdit = findViewById(R.id.time)
+                timeEdit.addTextChangedListener(object : TextWatcher {
+                        //These two are just needed to satisfy the TextWatcher interface
+                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                        override fun afterTextChanged(s: Editable) {
+                            val time = s.toString()
+                            if (time.matches(Regex("^([01]?[0-9]|2[0-3]):[0-5][0-9]\$")).not()) {
+                                timeEdit.error = "Invalid time format. Use HH:MM."
+                            }
+                        }
+                    })
 
-                // Branch services logic start
-                multiSelectBranchServices = findViewById(R.id.multiSelectBranchServices)
-                val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, availableServices)
-                multiSelectBranchServices.setAdapter(adapter)
-                multiSelectBranchServices.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
-                val selectedItems = mutableSetOf<String>()
-                multiSelectBranchServices.setOnItemClickListener { _, _, position, _ ->
-                    val selected = adapter.getItem(position) ?: return@setOnItemClickListener
+                availableServices.add(0, "None")
+                // Branch spinner adapter
+                serviceSpinner = findViewById(R.id.serviceSpinner)
+                val serviceAdapter = ArrayAdapter(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    availableServices
 
-                    if (selectedItems.contains(selected)) {
-                        selectedItems.remove(selected)
-                    } else {
-                        selectedItems.add(selected)
-                    }
-                    multiSelectBranchServices.setText(selectedItems.joinToString(", "))
-                    multiSelectBranchServices.setSelection(multiSelectBranchServices.text.length)
-                }
-                multiSelectBranchServices.setOnFocusChangeListener { v, hasFocus ->
-                    if (hasFocus) {
-                        (v as? MultiAutoCompleteTextView)?.showDropDown()
-                    }
-                }
-                multiSelectBranchServices.setOnClickListener {
-                    (it as? MultiAutoCompleteTextView)?.showDropDown()
-                }
-                multiSelectBranchServices.keyListener = null
-                // Branch services logic end
+                )
+                serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                serviceSpinner.adapter = serviceAdapter
+
+                // Day spinner adapter
+                val dayAdapter = ArrayAdapter(
+                    this,
+                    android.R.layout.simple_spinner_item,
+
+                    arrayOf("None", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" )
+
+                )
+                dayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                daySpinner.adapter = dayAdapter
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
@@ -93,12 +89,12 @@ class SearchFiltersActivity : AppCompatActivity() {
 
     private fun addFilters() {
         val intent = Intent(this, ClientWelcomeActivity::class.java)
-        val services = multiSelectBranchServices.text.toString().split(",").map { it.trim() }.toCollection(ArrayList())
+        val service = serviceSpinner.selectedItem.toString()
         intent.putExtra("branchAddress", branchAddress.text.toString())
         intent.putExtra("branchTelephone", branchTelephone.text.toString())
-        intent.putExtra("services", services)
-//        intent.putExtra("dayOfTheWeek", dayOfTheWeek.selectedItem.toString())
-//        intent.putExtra("time", timeEdit.text.toString())
+        intent.putExtra("service", service)
+        intent.putExtra("dayOfTheWeek", daySpinner.selectedItem.toString())
+        intent.putExtra("time", timeEdit.text.toString())
         startActivity(intent);
         finish()
     }
