@@ -97,15 +97,6 @@
         android:backgroundTint="@color/design_default_color_background"
         android:text="LOGIN" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/forgotpass"
-        android:layout_below="@id/loginbtn"
-        android:text="Forgot password?"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"/>
 </RelativeLayout>
 
 

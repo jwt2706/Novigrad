@@ -5,6 +5,9 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +15,7 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
@@ -29,6 +33,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
     private lateinit var welcomeMessage: TextView
     private lateinit var roleMessage: TextView
     private lateinit var modifyBranchBtn: MaterialButton
+    private lateinit var branchNameValue: String
     private lateinit var branchName: TextView
     private lateinit var branchAddress: TextView
     private lateinit var branchTelephone: TextView
@@ -41,6 +46,13 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
     private lateinit var saturdayHours: TextView
     private lateinit var sundayHours: TextView
     private lateinit var serviceRequestListView: ListView
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,38 +86,6 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
         modifyBranchBtn.setOnClickListener() {
             modifyBranchBtnListener()
         }
-
-        // THIS IS SET UP WITH PLACEHOLDER VALUES, WILL CHANGE IN NEXT DELIVERABLE
-        serviceRequestListView = findViewById(R.id.serviceRequestList)
-        var data = ArrayList<ServiceRequestListItem>();
-
-        //Placeholders
-        data.add(
-            ServiceRequestListItem(
-                "Ahmed Nasr",
-                "24/5",
-                "Drivers license"
-            )
-        )
-        data.add(
-            ServiceRequestListItem(
-                "Ibrahim Darwish",
-                "21/8",
-                "Health Card"
-            )
-        )
-        data.add(
-            ServiceRequestListItem(
-                "Daniel Morghati",
-                "1/1",
-                "ID card"
-            )
-        )
-        val adapter = ServiceRequestCustomListAdapter(this, data)
-        serviceRequestListView.adapter = adapter
-
-        setListViewHeightBasedOnChildren(serviceRequestListView)
-
     }
 
     fun fetchAndWriteBranchData(userId: String):Boolean { //DO NOT MAKE PRIVATE, IMMA USE THIS FOR A TEST
@@ -116,6 +96,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
                     var documentFound = true
                     val data = documentSnapshot.data
                     val name = data?.get("name") as? String
+                    branchNameValue = name.toString()
                     val address = data?.get("address") as? String
                     val telephone = data?.get("telephone") as? String
                     val timeSlots = data?.get("timeSlots") as? List<String>
@@ -125,7 +106,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
                     branchAddress.text = "Address: $address"
 
                     if (telephone != null) {
-                        branchTelephone.text = "${telephone.substring(0, 3)} ${telephone.substring(3, 6)} ${telephone.substring(6, 10)}"
+                        branchTelephone.text = "Telephone: ${telephone.substring(0, 3)} ${telephone.substring(3, 6)} ${telephone.substring(6, 10)}"
                     }
 
                     if (services != null) {
@@ -142,12 +123,49 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
                         sundayHours.text = "Sunday: ${timeSlots[12]} - ${timeSlots[13]}"
                     }
 
+                    fetchAndWriteRequestsData()
 
                 } else {
                     Toast.makeText(this, "Branch data not found.", Toast.LENGTH_LONG).show()
                 }
+
             }
         return documentFound
+    }
+
+    private fun fetchAndWriteRequestsData() {
+        serviceRequestListView = findViewById(R.id.serviceRequestList)
+        //list of the requests fetched from the DB
+        val db = FirebaseFirestore.getInstance().collection("requests")
+        db.get()
+            .addOnSuccessListener { snapshot ->
+                var serviceRequests = ArrayList<ServiceRequestListItem>();
+                for (document in snapshot) {
+                    val data = document.data
+                    val selectedBranchName = data?.get("branchName") as? String
+                    Log.d("!!!!", selectedBranchName.toString())
+                    Log.d("????", branchNameValue)
+                        if (selectedBranchName.toString().trim() == branchNameValue.trim()) {
+                            val item = ServiceRequestListItem(
+                                document.id,
+                                data?.get("customerName") as? String ?: "",
+                                "${data?.get("date") as? String ?: ""} at ${data?.get("timeSelected") as String?: ""}",
+                                data?.get("selectedService") as? String ?: "",
+                                data?.get("email") as? String ?: "",
+                                data?.get("dateOfBirth") as? String ?: "",
+                                data?.get("address") as? String ?: "",
+                                data?.get("license") as? String ?: "",
+                            )
+                            serviceRequests.add(item)
+                            Log.d("@@@@@@2", serviceRequests.toString())
+                        }
+                }
+                Log.d("@@@@@@", serviceRequests.toString())
+                val adapter = ServiceRequestCustomListAdapter(this, serviceRequests)
+                serviceRequestListView.adapter = adapter
+
+                setListViewHeightBasedOnChildren(serviceRequestListView)
+            }
     }
     private fun modifyBranchBtnListener() {
         startActivity(Intent(this,EmployeeModifyBranchActivity::class.java))
@@ -223,26 +241,56 @@ class ServiceRequestCustomListAdapter(context: Context, data: ArrayList<ServiceR
         val customerName = view.findViewById<TextView>(R.id.customerName)
         val appointmentValue = view.findViewById<TextView>(R.id.appointmentValue)
         val serviceValue = view.findViewById<TextView>(R.id.serviceValue)
+        val emailValue = view.findViewById<TextView>(R.id.emailValue)
+        val dobValue = view.findViewById<TextView>(R.id.dateValue)
+        val addressValue = view.findViewById<TextView>(R.id.addressValue)
+        val licenseValue = view.findViewById<TextView>(R.id.licenseValue)
         val btnAccept = view.findViewById<Button>(R.id.btnAccept)
         val btnDecline = view.findViewById<Button>(R.id.btnDecline)
 
         customerName.text = listItem.customerName
         appointmentValue.text = listItem.appointmentDate
         serviceValue.text = listItem.serviceRequired
+        emailValue.text = listItem.customerEmail
+        dobValue.text = listItem.customerDateOfBirth
+        addressValue.text = listItem.customerAddress
+        licenseValue.text = listItem.customerLicense
+
 
         btnAccept.setOnClickListener {
-           // Accept service logic
+            val db = FirebaseFirestore.getInstance().collection("requests")
+            db.document(listItem.documentId).delete().addOnSuccessListener {
+                Toast.makeText(context, "Service Accepted", Toast.LENGTH_SHORT).show()
+                data.removeAt(position)
+                notifyDataSetChanged()
+            }.addOnFailureListener {
+                Toast.makeText(context, "Service could not be accepted", Toast.LENGTH_SHORT).show()
+            }
+            // BONUS: Notify user
         }
 
         btnDecline.setOnClickListener {
-            // Decline service logic
+            val db = FirebaseFirestore.getInstance().collection("requests")
+            db.document(listItem.documentId).delete().addOnSuccessListener {
+                Toast.makeText(context, "Service Declined", Toast.LENGTH_SHORT).show()
+                data.removeAt(position)
+                notifyDataSetChanged()
+            }.addOnFailureListener {
+                Toast.makeText(context, "Service could not be declined", Toast.LENGTH_SHORT).show()
+            }
+            // BONUS: Notify user
         }
         return view
     }
 }
 
 class ServiceRequestListItem(
+    val documentId: String,
     val customerName: String,
     val appointmentDate: String,
     val serviceRequired: String,
+    val customerEmail: String,
+    val customerDateOfBirth: String,
+    val customerAddress: String,
+    val customerLicense: String
 )

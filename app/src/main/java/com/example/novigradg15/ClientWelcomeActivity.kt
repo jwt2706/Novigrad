@@ -1,9 +1,11 @@
 package com.example.novigradg15
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Telephony.Mms.Rate
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -28,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 class ClientWelcomeActivity : AppCompatActivity() {
 
@@ -37,6 +40,12 @@ class ClientWelcomeActivity : AppCompatActivity() {
     private lateinit var branchesListView: ListView
     private lateinit var originalBranchesList: ArrayList<Map<String, Any>>
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -233,18 +242,19 @@ class ClientWelcomeActivity : AppCompatActivity() {
         adapter.refreshData(filteredBranches)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O) // I think this tag means it needs an a certain build number idk it made me put it
+    @RequiresApi(Build.VERSION_CODES.O)// I think this tag means it needs an a certain build number idk it made me put it
     fun isTimeWithinTimeslot(startTime: String, endTime: String, timeToCheck: String): Boolean {
-        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-        val start = LocalTime.parse(startTime, timeFormatter)
-        val end = LocalTime.parse(endTime, timeFormatter)
-        val time = LocalTime.parse(timeToCheck, timeFormatter)
-        if (time == start || time == end) return true
-        if (end.isAfter(start)) {
-            return time.isAfter(start) && time.isBefore(end)
-        } else {
-            return !time.isBefore(start) || !time.isAfter(end)
-        }
+            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+            val start = LocalTime.parse(startTime, timeFormatter)
+            val end = LocalTime.parse(endTime, timeFormatter)
+            val time = LocalTime.parse(timeToCheck, timeFormatter)
+
+            if (time == start || time == end) return true
+            if (end.isAfter(start)) {
+                return time.isAfter(start) && time.isBefore(end)
+            } else {
+                return !time.isBefore(start) || !time.isAfter(end)
+            }
     }
 }
 
@@ -276,6 +286,8 @@ class BranchesListAdapter(context: Context, data: ArrayList<Map<String, Any>>) :
         notifyDataSetChanged()
     }
 
+
+    @SuppressLint("SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val listItem = data[position]
 
@@ -286,6 +298,7 @@ class BranchesListAdapter(context: Context, data: ArrayList<Map<String, Any>>) :
         val telephoneValue = view.findViewById<TextView>(R.id.telephoneValue)
         val servicesValue = view.findViewById<TextView>(R.id.servicesValue)
         val btnRequest = view.findViewById<Button>(R.id.btnRequest)
+        val btnReview = view.findViewById<Button>(R.id.btnReview)
 
         val serviceSpinner = view.findViewById<Spinner>(R.id.serviceSpinner)
         var availableServices = listItem?.get("services") as? List<String>
@@ -309,13 +322,29 @@ class BranchesListAdapter(context: Context, data: ArrayList<Map<String, Any>>) :
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         serviceSpinner.adapter = adapter
 
+        val reviewsValue = view.findViewById<TextView>(R.id.reviewsValue)
+        //list of the requests fetched from the DB
+        val db = FirebaseFirestore.getInstance().collection("reviews")
+        db.get()
+            .addOnSuccessListener { snapshot ->
+                for (document in snapshot) {
+                    val data = document.data
+                    val selectedBranchName = data?.get("branchName") as? String
+                    if (selectedBranchName.toString().trim() ==  branchName.text.toString().trim()) {
+                        val reviews = data?.get("reviews") as? Double?: 0
+                        reviewsValue.text = "${reviews.toInt()} / 5"
+                        break
+                    } else {
+                        reviewsValue.text = "No reviews"
+                    }
+                }
+            }
 
         branchName.text = listItem?.get("name") as? String?:""
         addressValue.text = listItem?.get("address") as? String?:""
         telephoneValue.text = listItem?.get("telephone") as? String?:""
-        servicesValue.text = (listItem?.get("services") as? List<String>)?.joinToString(",")?: ""
+        servicesValue.text = (listItem?.get("services") as? List<String>)?.joinToString(", ")?: ""
 
-        Log.d("SERVICES", (listItem?.get("services") as? List<String>)?.joinToString(",")?: "")
         btnRequest.setOnClickListener {
             var intent = Intent(context, RequestVisitActivity::class.java)
             val selectedService = serviceSpinner.selectedItem.toString()
@@ -327,6 +356,13 @@ class BranchesListAdapter(context: Context, data: ArrayList<Map<String, Any>>) :
             intent.putExtra("branchName", branchName.text.toString())
             intent.putExtra("selectedService", selectedService)
             context.startActivity(intent);
+        }
+
+        btnReview.setOnClickListener {
+            var intent = Intent(context, RateBranchActivity::class.java)
+            intent.putExtra("branchName", listItem?.get("name") as? String?:"")
+            context.startActivity(intent);
+            notifyDataSetChanged()
         }
         return view
     }

@@ -23,6 +23,12 @@ class SearchFiltersActivity : AppCompatActivity() {
     private lateinit var timeEdit: EditText
     private lateinit var saveBtn: MaterialButton
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ClientWelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_filters)

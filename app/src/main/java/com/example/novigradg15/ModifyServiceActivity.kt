@@ -20,6 +20,13 @@ class ModifyServiceActivity : AppCompatActivity() {
     private lateinit var statusCheckBox: CheckBox
     private lateinit var photoCheckBox: CheckBox
     private lateinit var modifyServiceBtn: MaterialButton
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, AdminWelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modify_service)

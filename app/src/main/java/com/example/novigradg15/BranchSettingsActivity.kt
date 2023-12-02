@@ -27,6 +27,13 @@ class BranchSettingsActivity : AppCompatActivity() {
     private lateinit var db: CollectionReference
     private lateinit var auth: FirebaseAuth
     private lateinit var branchListView: ListView
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, AdminWelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_branch_settings)

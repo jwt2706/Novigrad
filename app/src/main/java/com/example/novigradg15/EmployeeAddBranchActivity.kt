@@ -34,8 +34,14 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
     private lateinit var sundayToHours: EditText
     private lateinit var sundayFromHours: EditText
     private lateinit var addBtn: MaterialButton
-
     private lateinit var auth: FirebaseAuth
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, EmployeeWelcomeNoBranchActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_employee_add_branch)
@@ -118,7 +124,7 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
 
                         override fun afterTextChanged(s: Editable) {
                             val time = s.toString()
-                            if (time.matches(Regex("^([01]?[0-9]|2[0-3]):[0-5][0-9]\$")).not()) {
+                            if (time.matches(Regex("^([01][0-9]|2[0-3]):[0-5][0-9]\$")).not()) {
                                 timeEdit.error = "Invalid time format. Use HH:MM."
                             }
                         }
@@ -182,7 +188,7 @@ class EmployeeAddBranchActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance().collection("branches")
 
-        val timeSlots = listOf(mondayToHoursText, mondayFromHoursText, tuesdayFromHoursText, tuesdayToHoursText, wednesdayFromHoursText, wednesdayToHoursText, thursdayFromHoursText, thursdayToHoursText, fridayFromHoursText, fridayToHoursText, saturdayFromHoursText, saturdayToHoursText, sundayFromHoursText, sundayToHoursText)
+        val timeSlots = listOf(mondayFromHoursText, mondayToHoursText, tuesdayFromHoursText, tuesdayToHoursText, wednesdayFromHoursText, wednesdayToHoursText, thursdayFromHoursText, thursdayToHoursText, fridayFromHoursText, fridayToHoursText, saturdayFromHoursText, saturdayToHoursText, sundayFromHoursText, sundayToHoursText)
 
         val data = hashMapOf(
             "name" to name,

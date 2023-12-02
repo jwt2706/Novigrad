@@ -22,6 +22,12 @@ class AdminWelcomeActivity : AppCompatActivity() {
     private lateinit var branchSettingsBtn: MaterialButton
     private lateinit var serviceSettingsBtn: MaterialButton
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_welcome)
