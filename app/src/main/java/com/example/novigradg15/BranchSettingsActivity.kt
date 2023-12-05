@@ -100,10 +100,22 @@ class BranchCustomListAdapter(context: Context, data: ArrayList<BranchListItem>)
 
         btnDelete.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
-            val collectionReference = db.collection("users")
-            val documentReference = collectionReference.document(listItem.id)
+            val userCollectionReference = db.collection("users")
+            val userDocumentReference = userCollectionReference.document(listItem.id)
+//            val userID = listItem.id
+            userDocumentReference.delete()
+                .addOnSuccessListener {
+                    data.remove(listItem) // Remove the item from the data list
+                    notifyDataSetChanged()
+                    Toast.makeText(context, "Account deleted.", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+            val branchCollectionReference = db.collection("branches")
+            val branchDocumentReference = branchCollectionReference.document(listItem.id)
             val userID = listItem.id
-            documentReference.delete()
+            branchDocumentReference.delete()
                 .addOnSuccessListener {
                     data.remove(listItem) // Remove the item from the data list
                     notifyDataSetChanged()
