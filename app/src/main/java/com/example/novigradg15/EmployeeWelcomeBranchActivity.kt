@@ -133,12 +133,14 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
         return documentFound
     }
 
-    private fun fetchAndWriteRequestsData() {
+    public fun fetchAndWriteRequestsData(): Boolean {
+        var success = false
         serviceRequestListView = findViewById(R.id.serviceRequestList)
         //list of the requests fetched from the DB
         val db = FirebaseFirestore.getInstance().collection("requests")
         db.get()
             .addOnSuccessListener { snapshot ->
+                success = true
                 var serviceRequests = ArrayList<ServiceRequestListItem>();
                 for (document in snapshot) {
                     val data = document.data
@@ -166,14 +168,17 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
 
                 setListViewHeightBasedOnChildren(serviceRequestListView)
             }
+        return success
     }
     private fun modifyBranchBtnListener() {
         startActivity(Intent(this,EmployeeModifyBranchActivity::class.java))
         finish()
     }
-    private fun fetchAndWriteUserData() {
+    public fun fetchAndWriteUserData(): Boolean {
+        var success = false
         userInfo.get()
             .addOnSuccessListener {documentSnapshot ->
+                success = true
                 if (documentSnapshot.exists()) {
                     val data = documentSnapshot.data
                     val role = data?.get("role") as? String
@@ -190,6 +195,7 @@ class EmployeeWelcomeBranchActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
+        return success
     }
 
     //FIX FOR A UI GLITCH

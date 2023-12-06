@@ -44,11 +44,12 @@ class RateBranchActivity : AppCompatActivity() {
             }
         }
 
-    private fun fetchAndUpdateReviewsData() {
+    public fun fetchAndUpdateReviewsData(): Boolean {
+        var success = false
         val db = FirebaseFirestore.getInstance().collection("reviews")
         db.get().addOnSuccessListener { snapshot ->
+            success = true
             var documentUpdated = false
-
             for (document in snapshot) {
                 val data = document.data
                 val selectedBranchName = data?.get("branchName") as? String
@@ -70,13 +71,15 @@ class RateBranchActivity : AppCompatActivity() {
             if (!documentUpdated) {
                 createNewDocument(db)
             }
-        }.addOnFailureListener {
-            // Handle failure
+        }.addOnFailureListener { e ->
+        // Handle failure
+            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
         }
+        return success
     }
 
-    private fun createNewDocument(db: CollectionReference) {
-        Log.d("!!!!", "New document created!")
+    public fun createNewDocument(db: CollectionReference): Boolean {
+        var success = false
         val newReviewScore = ratingInput.text.toString().toDouble()
         val hMap = hashMapOf(
             "branchName" to branchName,
@@ -86,8 +89,11 @@ class RateBranchActivity : AppCompatActivity() {
 
         db.add(hMap).addOnSuccessListener {
             // Handle success
+            success = true
         }.addOnFailureListener {
             // Handle failure
+            success = false
         }
+        return success
     }
 }
