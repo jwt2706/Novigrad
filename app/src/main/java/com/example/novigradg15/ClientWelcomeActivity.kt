@@ -332,7 +332,7 @@ class BranchesListAdapter(context: Context, data: ArrayList<Map<String, Any>>) :
                     val selectedBranchName = data?.get("branchName") as? String
                     if (selectedBranchName.toString().trim() ==  branchName.text.toString().trim()) {
                         val reviews = data?.get("reviews") as? Double?: 0
-                        reviewsValue.text = "${reviews.toInt()} / 5"
+                        reviewsValue.text = "${String.format("%.1f", reviews).toDouble()} / 5"
                         break
                     } else {
                         reviewsValue.text = "No reviews"

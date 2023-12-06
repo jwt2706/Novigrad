@@ -1,10 +1,8 @@
 package com.example.novigradg15
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton

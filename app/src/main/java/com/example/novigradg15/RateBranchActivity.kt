@@ -3,6 +3,7 @@ package com.example.novigradg15
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,11 +56,11 @@ class RateBranchActivity : AppCompatActivity() {
                     val reviews = data["reviews"] as? Double ?: 0.0
                     val reviewCount = data["reviewCount"] as? Double ?: 0.0
                     val newReviews = ((reviewCount * reviews) + (ratingInput.text.toString().toDouble())) / (reviewCount + 1)
+                    documentUpdated = true
                     document.reference.update(mapOf(
                         "reviews" to newReviews,
                         "reviewCount" to reviewCount + 1
                     )).addOnSuccessListener {
-                        documentUpdated = true
                     }.addOnFailureListener {
                     }
                     break
@@ -75,6 +76,7 @@ class RateBranchActivity : AppCompatActivity() {
     }
 
     private fun createNewDocument(db: CollectionReference) {
+        Log.d("!!!!", "New document created!")
         val newReviewScore = ratingInput.text.toString().toDouble()
         val hMap = hashMapOf(
             "branchName" to branchName,

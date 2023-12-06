@@ -1,14 +1,12 @@
 package com.example.novigradg15
 
 import android.content.Intent
-import android.hardware.SensorAdditionalInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -52,7 +50,6 @@ class AddServiceActivity : AppCompatActivity() {
 
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid
-        val db = FirebaseFirestore.getInstance().collection("services")
 
         if (userId != null) {
             createService(userId)
