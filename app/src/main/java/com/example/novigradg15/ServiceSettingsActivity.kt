@@ -28,6 +28,13 @@ class ServiceSettingsActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var serviceListView: ListView
     private lateinit var addServiceBtn: MaterialButton
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, AdminWelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_settings)

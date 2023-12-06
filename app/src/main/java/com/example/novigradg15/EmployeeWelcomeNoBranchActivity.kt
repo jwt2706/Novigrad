@@ -21,6 +21,13 @@ class EmployeeWelcomeNoBranchActivity : AppCompatActivity() {
     private lateinit var roleMessage: TextView
     private lateinit var branchSettingsBtn: MaterialButton
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_employee_welcome_no_branch)

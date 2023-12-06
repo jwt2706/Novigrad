@@ -19,6 +19,13 @@ class MainActivity : ComponentActivity() {
     private lateinit var signupBtn: MaterialButton
     private lateinit var email: String
     private lateinit var password: String
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -85,7 +92,13 @@ class MainActivity : ComponentActivity() {
                                         }
                                     }
                             } else {
-                                startActivity(Intent(this, WelcomeActivity::class.java))
+                                val intent = Intent(this, ClientWelcomeActivity::class.java)
+                                intent.putExtra("branchAddress", "")
+                                intent.putExtra("branchTelephone", "")
+                                intent.putExtra("service", "")
+                                intent.putExtra("dayOfTheWeek", "")
+                                intent.putExtra("time", "")
+                                startActivity(intent)
                                 finish()
                             }
                         } else {

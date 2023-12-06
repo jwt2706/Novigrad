@@ -16,8 +16,8 @@
             android:id="@+id/itemUsername"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:textSize="20dp"
-            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:layout_margin="3dp"
             android:layout_height="30dp"
             android:text="Item Text" />
 
@@ -25,8 +25,8 @@
             android:id="@+id/itemEmail"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:textSize="20dp"
-            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:layout_margin="3dp"
             android:layout_height="30dp"
             android:text="Item Text" />
 

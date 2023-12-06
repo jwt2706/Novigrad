@@ -4,7 +4,6 @@ package com.example.novigradg15
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +13,9 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.auth.FirebaseUser
 
 
 class BranchSettingsActivity : AppCompatActivity() {
@@ -27,6 +23,13 @@ class BranchSettingsActivity : AppCompatActivity() {
     private lateinit var db: CollectionReference
     private lateinit var auth: FirebaseAuth
     private lateinit var branchListView: ListView
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, AdminWelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_branch_settings)
@@ -36,7 +39,7 @@ class BranchSettingsActivity : AppCompatActivity() {
         branchListView = findViewById(R.id.serviceList)
 
         var data = ArrayList<BranchListItem>();
-        db.get() //get all services from the database
+        db.get() //get all branches from the database
             .addOnSuccessListener { docs ->
                 for (doc in docs) {
                     val item = BranchListItem(
@@ -46,7 +49,6 @@ class BranchSettingsActivity : AppCompatActivity() {
                     )
                     if (doc.getString("role") == "Employee") {
                         data.add(item)
-                        Log.d("Tag222", doc.toString())
                     }
                 }
                 val adapter = BranchCustomListAdapter(this, data)
@@ -94,10 +96,20 @@ class BranchCustomListAdapter(context: Context, data: ArrayList<BranchListItem>)
 
         btnDelete.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
-            val collectionReference = db.collection("users")
-            val documentReference = collectionReference.document(listItem.id)
-            val userID = listItem.id
-            documentReference.delete()
+            val userCollectionReference = db.collection("users")
+            val userDocumentReference = userCollectionReference.document(listItem.id)
+            userDocumentReference.delete()
+                .addOnSuccessListener {
+                    data.remove(listItem) // Remove the item from the data list
+                    notifyDataSetChanged()
+                    Toast.makeText(context, "Account deleted.", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+            val branchCollectionReference = db.collection("branches")
+            val branchDocumentReference = branchCollectionReference.document(listItem.id)
+            branchDocumentReference.delete()
                 .addOnSuccessListener {
                     data.remove(listItem) // Remove the item from the data list
                     notifyDataSetChanged()

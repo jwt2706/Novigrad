@@ -39,8 +39,14 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
     private lateinit var sundayToHours: EditText
     private lateinit var sundayFromHours: EditText
     private lateinit var modifyBtn: MaterialButton
-
     private lateinit var auth: FirebaseAuth
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, EmployeeWelcomeBranchActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_employee_modify_branch)
@@ -97,7 +103,7 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
                         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                         override fun afterTextChanged(s: Editable) {
                             val time = s.toString()
-                            if (time.matches(Regex("^([01]?[0-9]|2[0-3]):[0-5][0-9]\$")).not()) {
+                            if (time.matches(Regex("^([01][0-9]|2[0-3]):[0-5][0-9]\$")).not()) {
                                 timeEdit.error = "Invalid time format. Use HH:MM."
                             }
                         }
@@ -156,20 +162,20 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
                     editBranchTelephone.setText(telephone)
 
                     if (timeSlots != null) {
-                        mondayToHours.setText("${timeSlots[0]}")
-                        mondayFromHours.setText("${timeSlots[1]}")
-                        tuesdayToHours.setText("${timeSlots[2]}")
-                        tuesdayFromHours.setText("${timeSlots[3]}")
-                        wednesdayFromHours.setText("${timeSlots[4]}")
+                        mondayToHours.setText("${timeSlots[1]}")
+                        mondayFromHours.setText("${timeSlots[0]}")
+                        tuesdayToHours.setText("${timeSlots[3]}")
+                        tuesdayFromHours.setText("${timeSlots[2]}")
+                        wednesdayFromHours.setText("${timeSlots[5]}")
                         wednesdayToHours.setText("${timeSlots[5]}")
-                        thursdayFromHours.setText("${timeSlots[6]}")
-                        thursdayToHours.setText("${timeSlots[7]}")
-                        fridayFromHours.setText("${timeSlots[8]}")
-                        fridayToHours.setText("${timeSlots[9]}")
-                        saturdayFromHours.setText("${timeSlots[10]}")
-                        saturdayToHours.setText("${timeSlots[11]}")
-                        sundayFromHours.setText("${timeSlots[12]}")
-                        sundayToHours.setText("${timeSlots[13]}")
+                        thursdayFromHours.setText("${timeSlots[7]}")
+                        thursdayToHours.setText("${timeSlots[6]}")
+                        fridayFromHours.setText("${timeSlots[9]}")
+                        fridayToHours.setText("${timeSlots[8]}")
+                        saturdayFromHours.setText("${timeSlots[11]}")
+                        saturdayToHours.setText("${timeSlots[10]}")
+                        sundayFromHours.setText("${timeSlots[13]}")
+                        sundayToHours.setText("${timeSlots[12]}")
                     }
 
 
@@ -203,7 +209,7 @@ class EmployeeModifyBranchActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance().collection("branches")
 
-        val timeSlots = listOf(mondayToHoursText, mondayFromHoursText, tuesdayFromHoursText, tuesdayToHoursText, wednesdayFromHoursText, wednesdayToHoursText, thursdayFromHoursText, thursdayToHoursText, fridayFromHoursText, fridayToHoursText, saturdayFromHoursText, saturdayToHoursText, sundayFromHoursText, sundayToHoursText)
+        val timeSlots = listOf(mondayFromHoursText, mondayToHoursText, tuesdayFromHoursText, tuesdayToHoursText, wednesdayFromHoursText, wednesdayToHoursText, thursdayFromHoursText, thursdayToHoursText, fridayFromHoursText, fridayToHoursText, saturdayFromHoursText, saturdayToHoursText, sundayFromHoursText, sundayToHoursText)
 
         val data = hashMapOf(
             "name" to name,

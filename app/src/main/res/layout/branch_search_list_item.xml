@@ -13,12 +13,12 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/customerName"
+            android:id="@+id/branchName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:layout_margin="5dp"
-            android:text="Customer name" />
+            android:text="Branch name" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,76 +27,16 @@
             android:layout_marginLeft="15dp">
 
             <TextView
-                android:id="@+id/appointmentLabel"
+                android:id="@+id/reviewsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Appointment Date: " />
+                android:text="Reviews: " />
 
             <TextView
-                android:id="@+id/appointmentValue"
+                android:id="@+id/reviewsValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="(Date)"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="15dp">
-
-            <TextView
-                android:id="@+id/serviceLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Service: " />
-
-            <TextView
-                android:id="@+id/serviceValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(Service)"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="15dp">
-
-            <TextView
-                android:id="@+id/emailLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Customer email: " />
-
-            <TextView
-                android:id="@+id/emailValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(email)"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="15dp">
-
-            <TextView
-                android:id="@+id/dateLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Customer date of birth: " />
-
-            <TextView
-                android:id="@+id/dateValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(date)"
+                android:text="No reviews"
                 />
         </LinearLayout>
 
@@ -110,13 +50,13 @@
                 android:id="@+id/addressLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Customer address: " />
+                android:text="Address: " />
 
             <TextView
                 android:id="@+id/addressValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="(address)"
+                android:text="(Address)"
                 />
         </LinearLayout>
 
@@ -127,20 +67,57 @@
             android:layout_marginLeft="15dp">
 
             <TextView
-                android:id="@+id/licenseLabel"
+                android:id="@+id/telephoneLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Customer license: " />
+                android:text="Telephone: " />
 
             <TextView
-                android:id="@+id/licenseValue"
+                android:id="@+id/telephoneValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="N/A"
+                android:text="(Telephone)"
                 />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp">
 
+            <TextView
+                android:id="@+id/servicesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Services: " />
+
+            <TextView
+                android:id="@+id/servicesValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Services)"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/chooseServiceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose Service: " />
+
+            <Spinner
+                android:id="@+id/serviceSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,20 +127,21 @@
             android:layout_marginLeft="15dp">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAccept"
+                android:id="@+id/btnRequest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Accept"
+                android:text="Request a visit"
                 android:backgroundTint="@color/design_default_color_background" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnDecline"
+                android:id="@+id/btnReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Decline"
+                android:text="Rate this branch"
                 android:backgroundTint="@color/design_default_color_background" />
+
         </LinearLayout>
 
     </LinearLayout>

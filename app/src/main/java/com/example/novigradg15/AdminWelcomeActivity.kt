@@ -1,10 +1,8 @@
 package com.example.novigradg15
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
@@ -22,6 +20,12 @@ class AdminWelcomeActivity : AppCompatActivity() {
     private lateinit var branchSettingsBtn: MaterialButton
     private lateinit var serviceSettingsBtn: MaterialButton
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_welcome)
@@ -55,9 +59,11 @@ class AdminWelcomeActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun fetchAndWriteUserData() {
+    public fun fetchAndWriteUserData(): Boolean {
+        var success = false
         db.get()
             .addOnSuccessListener {documentSnapshot ->
+                success = true
                 if (documentSnapshot.exists()) {
                     val data = documentSnapshot.data
                     val role = data?.get("role") as? String
@@ -74,8 +80,11 @@ class AdminWelcomeActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
+        return success
     }
 
-
+    fun isAdmin(): Boolean {
+        return true;
+    }
 
 }
