@@ -188,10 +188,12 @@ class PhotoVisitActivity : AppCompatActivity() {
         }
     }
 
-    private fun getBranchByName(nameToFind: String): Boolean {
+    public fun getBranchByName(nameToFind: String): Boolean {
+        var success = false
         val db = FirebaseFirestore.getInstance().collection("branches")
         db.get()
             .addOnSuccessListener { snapshot ->
+                success = true
                 for (document in snapshot) {
                     val data = document.data
                     val name = data?.get("name") as? String
@@ -213,7 +215,7 @@ class PhotoVisitActivity : AppCompatActivity() {
                     }
                 }
             }
-        return false
+        return success
     }
 
     private fun requestBtnListener() {

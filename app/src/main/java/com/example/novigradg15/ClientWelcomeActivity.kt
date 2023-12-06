@@ -286,7 +286,6 @@ class BranchesListAdapter(context: Context, data: ArrayList<Map<String, Any>>) :
         notifyDataSetChanged()
     }
 
-
     @SuppressLint("SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val listItem = data[position]

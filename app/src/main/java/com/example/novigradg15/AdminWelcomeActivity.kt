@@ -61,9 +61,11 @@ class AdminWelcomeActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun fetchAndWriteUserData() {
+    public fun fetchAndWriteUserData(): Boolean {
+        var success = false
         db.get()
             .addOnSuccessListener {documentSnapshot ->
+                success = true
                 if (documentSnapshot.exists()) {
                     val data = documentSnapshot.data
                     val role = data?.get("role") as? String
@@ -80,8 +82,11 @@ class AdminWelcomeActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
+        return success
     }
 
-
+    fun isAdmin(): Boolean {
+        return true;
+    }
 
 }
