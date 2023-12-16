@@ -1,5 +1,8 @@
 # Government Service Application: Novigrad
 
+:warning:
+Please note that as of **December 15th 2023** this proof-of-concept government service application, Novigrad, is no longer being actively maintained. As a result, the availability of the app's database cannot be guaranteed. 
+
 ## Description
 
 This proof-of-concept Android application is designed to provide a convenient and efficient way for citizens to access government services. It aims to streamline various processes and tasks that typically require physical visits to government offices or lengthy paperwork. The application is compatible with Android 7 and above.
@@ -10,11 +13,11 @@ This proof-of-concept Android application is designed to provide a convenient an
 
 2. **Secure Authentication**: The application ensures secure user authentication using industry-standard protocols, such as password-based authentication or multi-factor authentication, all backed by Firebase Authentication.
 
-3. **Application Submissions**: Users can submit visit requests for various services directly through the application. The app guides users through the necessary steps and provides a clear overview of required documents and available office hours.
+3. **Application Submissions**: Users can submit visit requests for various services directly through Novigrad. The app guides them through the necessary steps and provides a clear overview of required documents and available office hours.
 
-4. **Information Protection**: Users can securely upload supporting documents and other required information to use the service. The application ensures the privacy and integrity of information given using a secured database hosted on Google's cloud infrastructure Firebase.
+4. **Cloud Information Protection**: Users can securely upload supporting documents and other required information to use the service. The application ensures the privacy and integrity of information given using a secured database hosted on Google's cloud infrastructure, Firebase.
 
-5. **Service Creation**: Employees can created services and make them available to regular users. The administrator is able to overview all of these changes, and modify any if needed.
+5. **Service Creation**: Employees can create services and make them available to regular users. The administrator is able to overview all of these changes, and modify any if needed.
 
 ## Technologies Used
 
@@ -28,7 +31,7 @@ Novigrad is built using a combination of modern technologies to ensure a robust 
 
 ## Installation and Usage
 
-To install the Government Service Application, follow these steps:
+To install Novigrad, follow these steps:
 
 1. Ensure your Android device is running Android 7 or a later version.
 
@@ -40,9 +43,7 @@ To install the Government Service Application, follow these steps:
 
 5. Tap the `apk` file to begin the installation process.
 
-6. Once installed, you can find the Government Service Application on your device's home screen or app drawer.
-
-NOTE: The database may no longer be online.
+6. Once installed, you can find Novigrad on your device's home screen or app drawer.
 
 ## Testing
 
