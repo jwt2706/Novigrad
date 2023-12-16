@@ -56,8 +56,8 @@ Unified Modeling Language diagrams have been put together to document the applic
 
 ## Disclaimer
 
-The Government Service Application is a proof-of-concept application and may not reflect the exact features or services provided by official government applications. It is solely intended for demonstration purposes and does not handle real government data or transactions. Use the application at your own risk.
-This project was originally a school group assignement. As a result of this, the database for this application may no longer be properly maintainted.
+Novigrad is a proof-of-concept application and may not reflect the exact features or services provided by official government applications. It is solely intended for demonstration purposes and does not handle real government data or transactions. Use the application at your own risk.
+<br>This project was originally a school group assignement. Please also see the note at the top of this document.
 
 ## License
 
