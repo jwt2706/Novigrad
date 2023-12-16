@@ -6,7 +6,7 @@ This proof-of-concept Android application is designed to provide a convenient an
 
 ## Features
 
-1. **User Registration**: Users can create accounts by providing their personal information and verifying their identity, such as email, name, driver's license (with the option for photo proof), and more.
+1. **User Registration**: Users can create accounts and verify their identity by providing personal information, such as name, email address, driver's license, or any other relevant document photos.
 
 2. **Secure Authentication**: The application ensures secure user authentication using industry-standard protocols, such as password-based authentication or multi-factor authentication, all backed by Firebase Authentication.
 
